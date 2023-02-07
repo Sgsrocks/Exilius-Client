@@ -30,7 +30,7 @@ public class Configuration {
 
 	public static final String CLIENT_TITLE = "Exilius By Vigilance Gaming";
 	public static final String WEBSITE = "exilius-osrs.com";
-	public static final String DEDICATED_SERVER_ADDRESS = "127.0.0.1";//149.102.132.92
+	public static final String DEDICATED_SERVER_ADDRESS = "199.127.61.40";//149.102.132.92
 	public static final int PORT = 52777; //
 	public static final int TEST_PORT = 43595;
 
@@ -43,7 +43,7 @@ public class Configuration {
 	public static String CUSTOM_MODEL_DIRECTORY = "./data/custom_models/";
 	public static String CUSTOM_ANIMATION_DIRECTORY = "./data/custom_animations/";
 	public static boolean developerMode = false;
-	public static boolean packIndexData = true;  // turn to true to pack maps and items etc......
+	public static boolean packIndexData = false;  // turn to true to pack maps and items etc......
 	public static boolean dumpMaps = false;
 	public static boolean dumpAnimationData = false;
 	public static boolean dumpDataLists = false;

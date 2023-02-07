@@ -72,7 +72,6 @@ public class CacheDownloader {
 			Files.deleteIfExists(fileLocation);
 		} catch (IOException ex) {
 			log.severe("Cannot delete cache zip file.");
-			ex.printStackTrace();
 		}
 	}
 
@@ -101,14 +100,14 @@ public class CacheDownloader {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			//ClientWindow.popupMessage("Could not download the cache file.",
-			//"The website might be down or experiencing interruptions.",
-			//Signlink.getCacheDirectory());
+					//"The website might be down or experiencing interruptions.",
+				//	Signlink.getCacheDirectory());
 		} catch (Exception e) {
 			e.printStackTrace();
-			//ClientWindow.popupMessage("An error occurred while installing the cache.",
-			//"You may experience crashes or gameplay interruptions.",
-			//"Try deleting the cache and restarting the client.",
-			//Signlink.getCacheDirectory());
+		//	ClientWindow.popupMessage("An error occurred while installing the cache.",
+				//	"You may experience crashes or gameplay interruptions.",
+				//	"Try deleting the cache and restarting the client.",
+				//	Signlink.getCacheDirectory());
 		}
 		return null;
 	}
@@ -150,7 +149,7 @@ public class CacheDownloader {
 				float speedInBytes = 1000f * numWritten / elapsedTime;
 				int timeRemaining =  (int) ((fileSize - numWritten) / speedInBytes);
 
-				client.drawLoadingText(percentage, Configuration.CLIENT_TITLE + " - Downloading Cache " + percentage + "%");
+				client.drawLoadingText(percentage,  "Exilius by VG - Downloading Cache " + percentage + "%");
 			}
 		} finally {
 			try {
@@ -203,7 +202,6 @@ public class CacheDownloader {
 				unzip(zin, Signlink.getCacheDirectory() + e.getName());
 			}
 		}
-		in.close();
 		zin.close();
 	}
 
