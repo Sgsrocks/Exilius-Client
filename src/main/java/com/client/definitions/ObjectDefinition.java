@@ -46,8 +46,16 @@ public final class ObjectDefinition implements RSObjectComposition {
 			case 36201: // Raids 1 lobby entrance
 				objectDef.actions = new String[]{ "Enter", null, null, null, null};
 				break;
+			case 591:
+				objectDef.name = "Item Upgrades Table";
+				objectDef.actions = new String[]{"Forge", null, null, null, null};
+				break;
+			case 33320:
+				objectDef.name = "Fire of Exchange";
+				objectDef.actions = new String[] { "Burn", "Burn Rates", null, null, null };
+				break;
 			case 36062:
-				objectDef.description = "Teleports you anywhere around Skotos.";
+				objectDef.description = "Teleports you anywhere around Exilius.";
 				objectDef.actions = new String[] { "Activate", "Previous Location", null, null, null };
 				break;
 			case 4152:
@@ -139,13 +147,10 @@ public final class ObjectDefinition implements RSObjectComposition {
 				objectDef.name = "@pur@Platinum Altar";
 				break;
 			case 29064:
-				objectDef.name = "Skotos Leaderboards";
+				objectDef.name = "Exilius Leaderboards";
 				objectDef.actions = new String[] { "View", null, null, null, null };
 				break;
-			case 2153:
-				objectDef.name = "Fire of Exchange";
-				objectDef.actions = new String[] { "Burn", "Burn Rates", null, null, null };
-				break;
+
 			case 33318:
 				objectDef.name = "Fire of Destruction";
 				objectDef.actions = new String[] { "Sacrifice", null, null, null, null };

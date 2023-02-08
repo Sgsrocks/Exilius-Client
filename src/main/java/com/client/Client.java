@@ -13727,6 +13727,11 @@ public class Client extends GameEngine implements RSClient {
 
 		int x = baseX + (localPlayer.x - 6 >> 7);
 		int y = baseY + (localPlayer.z - 6 >> 7);
+		int var131 = x >> 6;
+		int var12 = y >> 6;
+		int chunkX = x >> 3;
+		int var141 = y >> 3;
+		int regionid = var131 * 256 + var12;
 		int mapx = currentRegionX; // map region x
 		int mapy = currentRegionY; // map region y
 		if (clientData) {
@@ -13736,9 +13741,9 @@ public class Client extends GameEngine implements RSClient {
 			aTextDrawingArea_1271.method385(0x00FF00, "Npcs Nearby: " + npcCount, 41, 5);
 
 			if (mapx > 1000 || mapy > 1000) {
-				aTextDrawingArea_1271.method385(0xffff00, "Current Region: " + mapx + ", " + mapy, 55, 5);
+				aTextDrawingArea_1271.method385(0xffff00, "Current Region: " + mapx + ", " + mapy + ", Region ID: " + regionid, 55, 5);
 			} else {
-				aTextDrawingArea_1271.method385(0xffff00, "Current Region: 0" + mapx + ", 0" + mapy, 55, 5);
+				aTextDrawingArea_1271.method385(0xffff00, "Current Region: 0" + mapx + ", 0" + mapy + ", Region ID: " + regionid, 55, 5);
 			}
 			for (int num = 0; num < terrainIndices.length; num++) {
 				int[] flo = terrainIndices;
@@ -15737,15 +15742,15 @@ public class Client extends GameEngine implements RSClient {
 		j += 30;
 		j += 25;  // 1 of these is remeber username lol yeah
 		// login user
-		if (MouseHandler.clickMode3 == 1 && MouseHandler.saveClickX >= 268 && MouseHandler.saveClickX <= 500 && MouseHandler.saveClickY >= 252
-			&& MouseHandler.saveClickY <= 285)
+		if (MouseHandler.clickMode3 == 1 && MouseHandler.saveClickX >= 272 && MouseHandler.saveClickX <= 525 && MouseHandler.saveClickY >= 210
+			&& MouseHandler.saveClickY <= 234)
 			loginScreenCursorPos = 0;
 		j += 15;
 
 
 		// login pass   // x = sw, ne  .. y = N , s
-		if (MouseHandler.clickMode3 == 1 && MouseHandler.saveClickX >= 269 && MouseHandler.saveClickX <= 500 && MouseHandler.saveClickY >= 315
-			&& MouseHandler.saveClickY <= 345)
+		if (MouseHandler.clickMode3 == 1 && MouseHandler.saveClickX >= 272 && MouseHandler.saveClickX <= 525 && MouseHandler.saveClickY >= 264
+			&& MouseHandler.saveClickY <= 294)
 			loginScreenCursorPos = 1;
 		j += 15;
 		int extraPos = 18;
@@ -15771,13 +15776,13 @@ public class Client extends GameEngine implements RSClient {
 				firstLoginMessage = "";
 			}
 		} else if (loginScreenState == LoginScreenState.LOGIN) { // remember user
-			if (MouseHandler.clickMode3 == 1 && MouseHandler.saveClickY >= 424 && MouseHandler.saveClickY <= 450
-				&& MouseHandler.saveClickX >= 250 - extraPos && MouseHandler.saveClickX <= 260 - extraPos) {
+			if (MouseHandler.clickMode3 == 1 && MouseHandler.saveClickY >= 300 && MouseHandler.saveClickY <= 313
+				&& MouseHandler.saveClickX >= 286 - extraPos && MouseHandler.saveClickX <= 301 - extraPos) {
 				informationFile.setUsernameRemembered(!informationFile.isUsernameRemembered());
 			}
 			// remember pass
-			if (MouseHandler.clickMode3 == 1 && MouseHandler.saveClickY >= 430 && MouseHandler.saveClickY <= 447
-				&& MouseHandler.saveClickX >= 405 - extraPos && MouseHandler.saveClickX <= 425 - extraPos) {
+			if (MouseHandler.clickMode3 == 1 && MouseHandler.saveClickY >= 300 && MouseHandler.saveClickY <= 313
+				&& MouseHandler.saveClickX >= 416 - extraPos && MouseHandler.saveClickX <= 433 - extraPos) {
 				informationFile.setPasswordRemembered(!informationFile.isPasswordRemembered());
 			}
 		}
@@ -15787,8 +15792,8 @@ public class Client extends GameEngine implements RSClient {
 		int k1 = canvasHeight / 2 + 50;
 		k1 += 20;
 
-		if (MouseHandler.clickMode3 == 1 && MouseHandler.saveClickX >= 309 && MouseHandler.saveClickX <= 459 && MouseHandler.saveClickY >= 390
-			&& MouseHandler.saveClickY <= 423) {
+		if (MouseHandler.clickMode3 == 1 && MouseHandler.saveClickX >= 231 && MouseHandler.saveClickX <= 376 && MouseHandler.saveClickY >= 323
+			&& MouseHandler.saveClickY <= 353) {
 
 			// loginScreenState = 3; // I do the same for login box, and password?
 			loginFailures = 0;
