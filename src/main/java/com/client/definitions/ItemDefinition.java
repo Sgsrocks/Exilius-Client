@@ -2008,9 +2008,10 @@ public final class ItemDefinition implements RSItemComposition {
 
     public static ItemDefinition lookup(int itemId) {
              for (int count = 0; count < 10; count++) {
-                  if ((cache[count]).id == itemId)
-                       return cache[count];
+                 if ((cache[count]).id == itemId) {
+                     return cache[count];
                  }
+             }
         if (itemId == -1)
             itemId = 0;
         if (newCustomItems(itemId) != null) {
@@ -2021,12 +2022,14 @@ public final class ItemDefinition implements RSItemComposition {
 
             cacheIndex = (cacheIndex + 1) % 10;
             ItemDefinition itemDef = cache[cacheIndex];
-            if (itemId > 0)
                   item_data.currentPosition = streamIndices[itemId];
              itemDef.id = itemId;
              itemDef.setDefaults();
              itemDef.decode(item_data);
-
+        ItemDefinition_Sub1.itemDef(itemDef.id, itemDef);
+        ItemDefinition_Sub2.itemDef(itemDef.id, itemDef);
+        ItemDefinition_Sub3.itemDef(itemDef.id, itemDef);
+        customItems(itemDef.id);
              if (itemDef.certTemplateID != -1) {
                    itemDef.toNote();
                  }
@@ -2037,12 +2040,9 @@ public final class ItemDefinition implements RSItemComposition {
         if (itemDef.placeholderTemplateId != -1) {
             itemDef.method2790(lookup(itemDef.placeholderTemplateId), lookup(itemDef.placeholderId));
         }
-        ItemDefinition_Sub1.itemDef(itemId, itemDef);
-        ItemDefinition_Sub2.itemDef(itemId, itemDef);
-        ItemDefinition_Sub3.itemDef(itemId, itemDef);
-        customItems(itemId);
-
-             return itemDef;
+        int id = itemDef.id;
+        itemDef.id = id; // Have to do this for some cases
+        return itemDef;
            }
        public static ItemDefinition copy(ItemDefinition itemDef, int newId, int copyingItemId, String newName, String... actions) {
              ItemDefinition copyItemDef = lookup(copyingItemId);
@@ -2508,14 +2508,17 @@ public final class ItemDefinition implements RSItemComposition {
     }
 
     public void setDefaults() {
-        equipActions = new String[]{"Remove", null, "Operate", null, null};
+        // equipActions = new String[6];
+        customSpriteLocation = null;
+        customSmallSpriteLocation = null;
+        equipActions = new String[] { "Remove", null, "Operate", null, null };
         modelId = 0;
         name = null;
-        originalModelColors = null;
+        description = null;
         modifiedModelColors = null;
+        originalModelColors = null;
         modifiedTextureColors = null;
         originalTextureColors = null;
-
         spriteScale = 2000;
         spritePitch = 0;
         spriteCameraRoll = 0;
@@ -2549,7 +2552,7 @@ public final class ItemDefinition implements RSItemComposition {
         ambient = 0;
         contrast = 0;
         team = 0;
-        glowColor = -1;
+
         notedId = -1;
         unnotedId = -1;
         placeholderId = -1;
