@@ -2030,7 +2030,13 @@ public final class ItemDefinition implements RSItemComposition {
              if (itemDef.certTemplateID != -1) {
                    itemDef.toNote();
                  }
+        if (itemDef.notedId != -1) {
+            itemDef.method2789(lookup(itemDef.notedId), lookup(itemDef.unnotedId));
+        }
 
+        if (itemDef.placeholderTemplateId != -1) {
+            itemDef.method2790(lookup(itemDef.placeholderTemplateId), lookup(itemDef.placeholderId));
+        }
         ItemDefinition_Sub1.itemDef(itemId, itemDef);
         ItemDefinition_Sub2.itemDef(itemId, itemDef);
         ItemDefinition_Sub3.itemDef(itemId, itemDef);
@@ -2145,7 +2151,7 @@ public final class ItemDefinition implements RSItemComposition {
             return null;
         Sprite sprite = null;
         if (itemDef.certTemplateID != -1) {
-            sprite = getSprite(itemDef.certID, 10, -1);
+            sprite = getSprite(itemDef.certID, 10, -1, 0,true);
             if (sprite == null)
                 return null;
         }
@@ -2223,7 +2229,7 @@ public final class ItemDefinition implements RSItemComposition {
         return spriteData;
     }
 
-    public static Sprite getSprite(int itemId, int stackSize, int outlineColor) { // show me the model method
+    public static Sprite getSprite(int itemId, int stackSize, int outlineColor, int var3, boolean var5) { // show me the model method
         if (outlineColor == 0) {
             Sprite sprite = (Sprite) sprites.get(itemId);
             if (sprite != null && sprite.maxHeight != stackSize && sprite.maxHeight != -1) {
@@ -2252,7 +2258,15 @@ public final class ItemDefinition implements RSItemComposition {
             return null;
         Sprite sprite = null;
         if (itemDef.certTemplateID != -1) {
-            sprite = getSprite(itemDef.certID, 10, -1);
+            sprite = getSprite(itemDef.certID, 10, -1, 0,true);
+            if (sprite == null)
+                return null;
+        } else if (itemDef.notedId != -1) {
+            sprite = getSprite(itemDef.unnotedId, stackSize, -1, var3, false);
+            if (sprite == null)
+                return null;
+        } else if (itemDef.placeholderTemplateId != -1) {
+            sprite = getSprite(itemDef.placeholderId, stackSize, -1, 0, false);
             if (sprite == null)
                 return null;
         }
@@ -2292,6 +2306,15 @@ public final class ItemDefinition implements RSItemComposition {
         }
 
         Rasterizer2D.initDrawingArea(32, 32, enabledSprite.myPixels);
+        if (itemDef.notedId != -1) {
+            int l5 = sprite.maxWidth;
+            int j6 = sprite.maxHeight;
+            sprite.maxWidth = 32;
+            sprite.maxHeight = 32;
+            sprite.drawSprite(0, 0);
+            sprite.maxWidth = l5;
+            sprite.maxHeight = j6;
+        }
         if (itemDef.certTemplateID != -1) {
             int old_w = sprite.maxWidth;
             int old_h = sprite.maxHeight;
@@ -2527,6 +2550,12 @@ public final class ItemDefinition implements RSItemComposition {
         contrast = 0;
         team = 0;
         glowColor = -1;
+        notedId = -1;
+        unnotedId = -1;
+        placeholderId = -1;
+        placeholderTemplateId = -1;
+
+        searchable = false;
     }
 
     private void copy(ItemDefinition copy) {

@@ -689,7 +689,7 @@ public class Client extends GameEngine implements RSClient {
 							if (itemResults[itemId] != -1) {
 								final int startX = xPosition + rowCountX * 160;
 								final int startY = yPosition + rowCountY * 35;
-								Sprite itemSprite = ItemDefinition.getSprite(itemResults[itemId], 1, 0);
+								Sprite itemSprite = ItemDefinition.getSprite(itemResults[itemId], 1, 0, 0, false);
 								if (itemSprite != null)
 									itemSprite.drawSprite(startX, startY);
 
@@ -12183,7 +12183,7 @@ public class Client extends GameEngine implements RSClient {
 													itemSprite = new Sprite(itemDef.customSpriteLocation);
 												}
 											} else {
-												itemSprite = ItemDefinition.getSprite(j9, class9_1.inventoryAmounts[i3], l9);
+												itemSprite = ItemDefinition.getSprite(j9, class9_1.inventoryAmounts[i3], l9, 0,false);
 												if (itemDef.customSpriteLocation != null)
 												{
 													itemSprite = new Sprite(itemDef.customSpriteLocation);
@@ -17544,32 +17544,28 @@ public class Client extends GameEngine implements RSClient {
 					incomingPacket = -1;
 					return true;
 
-				case 34:
-					needDrawTabArea = true;
-					int frame = inStream.readUShort();  // frame
-					System.out.println("frame:"+frame+" should be 1688");
-					if (handledPacket34(frame)) {
-						incomingPacket = -1;
-						return true;
-					}
-					RSInterface class9_2 = RSInterface.interfaceCache[frame];
-					while (inStream.currentPosition < packetSize) {
-						int j20 = inStream.get_unsignedbyte(); //shoot payment stuff, think its btc or cashapp ?
-
-						int i23 = inStream.readUShort();
-						System.out.println("i23:"+(i23+1)+", wearid");
-
-						int l25 = inStream.get_unsignedbyte();
-						if (l25 == 255)
-							l25 = inStream.readDWord();
-						if (j20 >= 0 && j20 < class9_2.inventoryItemId.length) {
-							class9_2.inventoryItemId[j20] = i23;
-							class9_2.inventoryAmounts[j20] = l25;
-						}
-					}
-					incomingPacket = -1;
-					return true;
-
+                case 34:
+                    needDrawTabArea = true;
+                    int i9 = inStream.readUShort();
+                    if (handledPacket34(i9)) {
+                        incomingPacket = -1;
+                        return true;
+                    }
+                    RSInterface class9_2 = RSInterface.interfaceCache[i9];
+                    while (inStream.currentPosition < packetSize) {
+                        int j20 = (i9 == 30000 ? inStream.get_unsignedbyte() : inStream.readDWord());
+                        int i23 = inStream.readUShort(); //Item ID
+                        int l25 = inStream.get_unsignedbyte(); // Amount
+                        if (l25 == 255)
+                            l25 = inStream.readDWord();
+                        if (j20 >= 0 && j20 < class9_2.inventoryItemId.length) {
+                            class9_2.inventoryItemId[j20] = i23;
+                            class9_2.inventoryAmounts[j20] = l25;
+                        }
+                        System.out.println(i9 + " / " + i23 + " / " + l25  + " / " + j20) ;
+                    }
+                    incomingPacket = -1;
+                    return true;
 				case 4:
 				case 44:
 				case 84:

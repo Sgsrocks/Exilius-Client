@@ -297,7 +297,7 @@ public class HoverManager {
                     if (id < 1) {
                         continue;
                     }
-                    Sprite item = ItemDefinition.getSprite(id, 1, 0);
+                    Sprite item = ItemDefinition.getSprite(id, 1, 0, 0,false);
                     if (item != null) {
                         item.drawSprite(mouseX + spriteX, mouseY + 35 + y);
                         spriteX += 40;

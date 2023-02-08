@@ -19,6 +19,7 @@ repositories {
 }
 
 plugins {
+    id ("com.github.johnrengelman.shadow") version "7.1.2"
     kotlin("jvm") version "1.3.72"
     kotlin("plugin.lombok") version "1.5.21"
     application
@@ -113,10 +114,14 @@ tasks {
         destinationDirectory.set(file("$buildDir/libs"))
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
         archiveBaseName.set("${project.name}-Client")
+
+    }
+    shadowJar {
+        archiveBaseName.set("ExiliusRL")
     }
 
+    application {
+        mainClass.set("net.runelite.client.RuneLite")
+    }
 }
 
-application {
-    mainClass.set("net.runelite.client.RuneLite")
-}
