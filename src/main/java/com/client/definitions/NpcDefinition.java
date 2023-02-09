@@ -65,6 +65,18 @@ public final class NpcDefinition implements RSNPCComposition {
 			// Setting combat to zero to npcs that can't be attacked
 			entityDef.combatLevel = 0;
 		}
+		if(i == 7144) {
+			entityDef.models = new int[]{31241};
+			entityDef.standAnimation = 7230;
+			entityDef.walkAnimation = 7233;
+			entityDef.size = 2;
+		}
+		if(i == 9021) {
+			entityDef.models = new int[]{38594};
+			entityDef.standAnimation = 8417;
+			entityDef.walkAnimation = 8416;
+			entityDef.size = 5;
+		}
 		if (i == Npcs.PERDU) {
 			entityDef.actions = new String[] { "Talk-to", null, "Reclaim-lost", null, null};
 		}
@@ -1122,10 +1134,6 @@ public final class NpcDefinition implements RSNPCComposition {
 				standAnimation = buffer.readUShort();
 			else if (opcode == 14)
 				walkAnimation = buffer.readUShort();
-			else if (opcode == 15)
-				readyanim_l = buffer.readUShort();
-			else if (opcode == 16)
-				readyanim_r = buffer.readUShort();
 			else if (opcode == 17) {
 				walkAnimation = buffer.readUShort();
 				rotate180Animation = buffer.readUShort();
@@ -1185,9 +1193,27 @@ public final class NpcDefinition implements RSNPCComposition {
 				anInt85 = buffer.readSignedByte();
 			else if (opcode == 101)
 				anInt92 = buffer.readSignedByte();
-			else if (opcode == 102)
-				anInt75 = buffer.readUShort();
-			else if (opcode == 103)
+            else if (opcode == 102) {
+                int var3 = buffer.get_unsignedbyte();
+                int var4 = 0;
+
+                for(int var5 = var3; var5 != 0; var5 >>= 1) {
+                    ++var4;
+                }
+
+                this.headIconArchiveIds = new int[var4];
+                this.headIconSpriteIndex = new short[var4];
+
+                for(int var6 = 0; var6 < var4; ++var6) {
+                    if ((var3 & 1 << var6) == 0) {
+                        this.headIconArchiveIds[var6] = -1;
+                        this.headIconSpriteIndex[var6] = -1;
+                    } else {
+                        this.headIconArchiveIds[var6] = buffer.readNullableLargeSmart();
+                        this.headIconSpriteIndex[var6] = (short)buffer.readShortSmartSub();
+                    }
+                }
+            } else if (opcode == 103)
 				getDegreesToTurn = buffer.readUShort();
 			else if (opcode == 106 || opcode == 118) {
 				anInt57 = buffer.readUShort();
@@ -1485,7 +1511,8 @@ public final class NpcDefinition implements RSNPCComposition {
 	public int combatlevel = -1;
 	public int field1923 = -1;
 	public int field1922 = -1;
-
+    int[] headIconArchiveIds = null;
+    short[] headIconSpriteIndex = null;
 
 	public static int anInt56;
 	public int anInt57;

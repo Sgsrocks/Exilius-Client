@@ -336,14 +336,16 @@ public final class ObjectDefinition implements RSObjectComposition {
 				objectDef.description = "A chest to store items for UIM.";
 				break;
 			case 1752:
-				objectDef.models = new int[] { 53166, };
-				objectDef.name = "AFK TREE";
-				objectDef.length = 3;
-				objectDef.width = 3;
-				objectDef.ambient = 25;
-				objectDef.actions = new String[] { "Chop down", null, null, null, null };
-				objectDef.mapscene = 0;
-				break;
+				objectDef.models = new int[] { 4146, };
+			objectDef.name = "Hollow tree";
+			objectDef.length = 3;
+			objectDef.width = 3;
+			objectDef.ambient = 25;
+			objectDef.actions = new String[] { "Chop down", null, null, null, null };
+				objectDef.recolorToFind = new short[] { 13592, 10512, };
+				objectDef.recolorToReplace = new short[] { 7056, 6674, };
+			objectDef.mapscene = 0;
+			break;
 			case 4873:
 				objectDef.name = "Wilderness Lever";
 				objectDef.length = 3;
@@ -399,7 +401,7 @@ public final class ObjectDefinition implements RSObjectComposition {
 				objectDef.name = "Barrows Mini-game Portal";
 				break;
 			case 1753:
-				objectDef.models = new int[] { 53166, };
+				objectDef.models = new int[] { 8157, };
 				objectDef.name = "Yew";
 				objectDef.length = 3;
 				objectDef.width = 3;

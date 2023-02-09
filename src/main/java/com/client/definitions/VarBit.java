@@ -23,15 +23,9 @@ public final class VarBit {
 	private void decode(Buffer buffer) {
 		int opcode = buffer.get_unsignedbyte();
 
-		if (opcode == 0) {
-			return;
-		} else if (opcode == 1) {
 			setting = buffer.readUShort();
 			start = buffer.get_unsignedbyte();
 			end = buffer.get_unsignedbyte();
-		} else {
-			System.out.println("Invalid varbit opcode: " + opcode);
-		}
 	}
 
 

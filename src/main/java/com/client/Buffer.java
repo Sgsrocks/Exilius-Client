@@ -598,4 +598,17 @@ public final class Buffer extends Cacheable {
         currentPosition += 4;
         return ((payload[currentPosition - 4] & 0xff) << 24) + ((payload[currentPosition - 3] & 0xff) << 16) + ((payload[currentPosition - 2] & 0xff) << 8) + (payload[currentPosition - 1] & 0xff);
     }
+    public int readNullableLargeSmart() {
+        if (this.payload[this.currentPosition] < 0) {
+            return this.readInt() & Integer.MAX_VALUE;
+        } else {
+            int var1 = this.readUShort();
+            return var1 == 32767 ? -1 : var1;
+        }
+    }
+
+    public int readShortSmartSub() {
+        int var1 = this.payload[this.currentPosition] & 255;
+        return var1 < 128 ? this.get_unsignedbyte() - 1 : this.readUShort() - 0x8000;
+    }
 }

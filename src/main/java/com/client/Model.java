@@ -58,7 +58,13 @@ public class Model extends Renderable implements RSModel {
 
 
     private Model(int modelId) {
+        if (modelId == 0) {
+            return;
+        }
 
+        if (modelId == 39284) { // broken models
+            return;
+        }
         this.vertex_count = 0;
         this.face_count = 0;
         this.facePriority = 0;
@@ -67,14 +73,6 @@ public class Model extends Renderable implements RSModel {
         byte[] data = modelHeaders[modelId].data;
         if (data[data.length - 1] == -3 && data[data.length - 2] == -1) {
             ModelLoader.decodeType3(this, data);
-        } else if (data[data.length - 1] == -2 && data[data.length - 2] == -1) {
-            ModelLoader.decodeType2(this, data);
-        } else if (IntStream.of(models662).anyMatch(x -> x == modelId)) {
-            if (data[data.length - 1] == -1 && data[data.length - 2] == -1) {
-                decode662(data, modelId);
-            } else {
-                ModelLoader.decodeOldFormat(this, data);
-            }
         } else if (data[data.length - 1] == -2 && data[data.length - 2] == -1) {
             ModelLoader.decodeType2(this, data);
         } else if (data[data.length - 1] == -1 && data[data.length - 2] == -1) {

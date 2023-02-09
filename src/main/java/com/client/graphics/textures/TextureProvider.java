@@ -133,10 +133,6 @@ public class TextureProvider implements RSTextureProvider, TextureLoader {
 
     public void animate(int textureID) {
         for (Texture texture : textures) {
-            if(textureID == 24){
-                texture.animate(24);
-                texture.isLoaded = false;
-            }
             if (texture != null && texture.animationDirection != 0 && texture.isLoaded) {
                 texture.animate(textureID);
                 texture.isLoaded = false;
