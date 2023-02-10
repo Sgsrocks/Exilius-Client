@@ -1166,8 +1166,8 @@ public class Client extends GameEngine implements RSClient {
 				e.printStackTrace();
 			}
 		}
-		//packCustomMaps();
-		packCustomModels();
+		packCustomMaps();
+		//packCustomModels();
 		//packCustomAnimations();
 	}
 

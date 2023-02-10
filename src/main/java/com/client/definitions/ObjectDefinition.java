@@ -675,20 +675,20 @@ public final class ObjectDefinition implements RSObjectComposition {
 		return var3 == -1 ? null : lookup(var3);
 	}
 
-	public Model model(int j, int frame, int l, AnimationDefinition seqtype) {
+	public Model model(int type, int frame, int orientation, AnimationDefinition seqtype) {
 		Model model = null;
 		long l1;
 		if (shapes == null) {
-			if (j != 10)
+			if (type != 10)
 				return null;
-			l1 = (long) ((type << 6) + l) + ((long) (frame + 1) << 32);
+			l1 = (long) ((this.type << 6) + orientation) + ((long) (frame + 1) << 32);
 			Model model_1 = (Model) recent_models.get(l1);
 			if (model_1 != null) {
 				return model_1;
 			}
 			if (models == null)
 				return null;
-			boolean flag1 = inverted ^ (l > 3);
+			boolean flag1 = inverted ^ (orientation > 3);
 			int k1 = models.length;
 			for (int i2 = 0; i2 < k1; i2++) {
 				int l2 = models[i2];
@@ -712,7 +712,7 @@ public final class ObjectDefinition implements RSObjectComposition {
 		} else {
 			int i1 = -1;
 			for (int j1 = 0; j1 < shapes.length; j1++) {
-				if (shapes[j1] != j)
+				if (shapes[j1] != type)
 					continue;
 				i1 = j1;
 				break;
@@ -720,16 +720,13 @@ public final class ObjectDefinition implements RSObjectComposition {
 
 			if (i1 == -1)
 				return null;
-			l1 = (long) ((type << 8) + (i1 << 3) + l) + ((long) (frame + 1) << 32);
+			l1 = (long) ((this.type << 8) + (i1 << 3) + orientation) + ((long) (frame + 1) << 32);
 			Model model_2 = (Model) recent_models.get(l1);
 			if (model_2 != null) {
 				return model_2;
 			}
-			if (models == null) {
-				return null;
-			}
 			int j2 = models[i1];
-			boolean flag3 = inverted ^ (l > 3);
+			boolean flag3 = inverted ^ (orientation > 3);
 			if (flag3)
 				j2 += 0x10000;
 			model = (Model) baseModels.get(j2);
@@ -747,7 +744,7 @@ public final class ObjectDefinition implements RSObjectComposition {
 		boolean flag2;
 		flag2 = translateX != 0 || translateY != 0 || translateZ != 0;
 		Model model_3 = new Model(recolorToFind == null,
-				AnimFrame.noAnimationInProgress(frame), l == 0 && frame == -1 && !flag
+				AnimFrame.noAnimationInProgress(frame), orientation == 0 && frame == -1 && !flag
 				&& !flag2, textureFind == null, model);
 		if (frame != -1) {
 			model_3.apply_label_groups();
@@ -755,7 +752,7 @@ public final class ObjectDefinition implements RSObjectComposition {
 			model_3.face_label_groups = null;
 			model_3.vertex_label_groups = null;
 		}
-		while (l-- > 0)
+		while (orientation-- > 0)
 			model_3.rotate90Degrees();
 
 		if (recolorToFind != null) {

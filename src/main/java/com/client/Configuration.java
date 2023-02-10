@@ -30,7 +30,7 @@ public class Configuration {
 
 	public static final String CLIENT_TITLE = "Exilius By Vigilance Gaming";
 	public static final String WEBSITE = "exilius-osrs.com";
-	public static final String DEDICATED_SERVER_ADDRESS = "199.127.61.40";//149.102.132.92
+	public static final String DEDICATED_SERVER_ADDRESS = "127.0.0.1";//199.127.61.40
 	public static final int PORT = 52777; //
 	public static final int TEST_PORT = 43595;
 

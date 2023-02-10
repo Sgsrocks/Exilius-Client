@@ -1975,7 +1975,7 @@ public class Model extends Renderable implements RSModel {
         }
 
         try {
-            this.withinObject(false, false, 0);
+            this.withinObject(false, false, 0L);
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
@@ -2274,7 +2274,7 @@ public class Model extends Renderable implements RSModel {
             int var15;
             int var16;
             int var18;
-            for (int currentTriangle = 0; currentTriangle < this.face_count; ++currentTriangle) {
+            for (int currentTriangle = 0; currentTriangle < this.face_count; currentTriangle = (char)(currentTriangle + 1)) {
                 if (this.colorsZ[currentTriangle] != -2) {
                     int triX = this.trianglesX[currentTriangle];
                     int triY = this.trianglesY[currentTriangle];
@@ -2336,7 +2336,9 @@ public class Model extends Renderable implements RSModel {
                         if (var15 * var23 + var18 * var24 + var21 * var25a > 0) {
                             outOfReach[currentTriangle] = true;
                             int var26 = (vertexScreenZ[triX] + vertexScreenZ[triY] + vertexScreenZ[triZ]) / 3 + this.diagonal3DAboveOrigin;
-                            faceLists[var26][depth[var26]++] = currentTriangle;
+                            if (var26 < 0)
+                                var26 = 0;
+                            faceLists[var26][depth[var26]++] = (char)currentTriangle;
                         }
                     }
                 }

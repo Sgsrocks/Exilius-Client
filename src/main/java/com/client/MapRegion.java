@@ -34,6 +34,7 @@ public final class MapRegion {
 	private static final int BLOCKED_TILE = 1;
 	public static final int BRIDGE_TILE = 2;
 	private static final int FORCE_LOWEST_PLANE = 8;
+	static int rndHue = (int)(Math.random() * 17.0) - 8;
 
 	public MapRegion(byte fileFlags[][][], int tileHeights[][][]) {
 		maximumPlane = 99;
@@ -116,7 +117,7 @@ public final class MapRegion {
 					for (int i8 = 0; i8 < regionSizeY; i8++) {
 						int k9 = l6 + 5;
 						if (k9 >= 0 && k9 < regionSizeX) {
-							int l12 = underlays[z][k9][i8]& 0x3FFF;
+							int l12 = underlays[z][k9][i8] & 0x3FFF;
 							if (l12 > 0) {
 								if (l12 > FloorDefinition.underlays.length) {
 									l12 = FloorDefinition.underlays.length;
@@ -131,7 +132,7 @@ public final class MapRegion {
 						}
 						int i13 = l6 - 5;
 						if (i13 >= 0 && i13 < regionSizeX) {
-							int i14 = underlays[z][i13][i8]& 0x3FFF;
+							int i14 = underlays[z][i13][i8 ]& 0x3FFF;
 							if (i14 > 0) {
 								FloorDefinition flo_1 = FloorDefinition.underlays[i14 - 1];
 								hues[i8] -= flo_1.blendHue;
@@ -1371,7 +1372,7 @@ public final class MapRegion {
 					i_254_ += i_257_ - 1;
 					int i_258_ = i_254_ & 0x3f;
 					int i_259_ = i_254_ >> 6 & 0x3f;
-					int i_260_ = stream.get_unsignedsmart_byteorshort() >> 2;
+					int i_260_ = stream.get_unsignedbyte() >> 2;
 					int i_261_ = i_259_ + i;
 					int i_262_ = i_258_ + i_250_;
 					if (i_261_ > 0 && i_262_ > 0 && i_261_ < 103 && i_262_ < 103) {
@@ -1405,7 +1406,7 @@ public final class MapRegion {
 					int l1 = j1 & 0x3f;
 					int i2 = j1 >> 6 & 0x3f;
 					int j2 = j1 >> 12;
-					int k2 = stream.get_unsignedsmart_byteorshort();
+					int k2 = stream.get_unsignedbyte();
 					int l2 = k2 >> 2;
 					int i3 = k2 & 3;
 					int j3 = i2 + i;
