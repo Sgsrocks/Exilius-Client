@@ -20,6 +20,6 @@
         <module name="Surge-Client.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="15" />
+    <bytecodeTargetLevel target="11" />
   </component>
 </project>
