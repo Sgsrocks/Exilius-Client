@@ -7754,7 +7754,7 @@ public class Client extends GameEngine implements RSClient {
 							}
 
 							if (inputString.startsWith("::interface")) {
-								if (localPlayer.displayName.equalsIgnoreCase("Noah")) {
+								if (localPlayer.displayName.equalsIgnoreCase("Epic")) {
 									try {
 										String[] args = inputString.split(" ");
 										if (args != null)

@@ -34,7 +34,7 @@ public class Configuration {
 	public static final int PORT = 52777; //
 	public static final int TEST_PORT = 43595;
 
-	public static final String CACHE_NAME = "SurgeCache";
+	public static final String CACHE_NAME = "Exilius";
 	public static final String DEV_CACHE_NAME = "local_cache";
 	public static final String CACHE_NAME_DEV = CACHE_NAME + "_dev";
 

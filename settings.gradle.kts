@@ -1,4 +1,4 @@
-rootProject.name = "Surge-Client"
+rootProject.name = "Exilius-Client"
 
 pluginManagement {
     resolutionStrategy {

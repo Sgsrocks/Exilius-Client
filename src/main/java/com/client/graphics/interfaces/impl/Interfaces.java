@@ -879,7 +879,7 @@ public final class Interfaces extends RSInterface {
 
 		addText(childId++, "Top 3 Weekly Voters:", tda, 2, 0xFF9300, true, true);
 
-		String[] names = {"1. Billy [12]", "2. Grant [7]", "3. Noah [3]"};
+		String[] names = {"1. ", "2. ", "3. "};
 		for(int i = 0; i < 3; i++) {
 			addText(childId++, names[i], tda, 0, 0xFF9300, false, true);
 			addText(childId++, "Prize:", tda, 0, 0xFF9300, false, true);
