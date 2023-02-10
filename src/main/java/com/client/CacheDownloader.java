@@ -1,5 +1,8 @@
 package com.client;
 
+import com.client.sign.Signlink;
+import com.google.common.base.Preconditions;
+
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
@@ -8,15 +11,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Enumeration;
 import java.util.Objects;
-import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
-
-import com.client.definitions.server.ItemDef;
-import com.client.sign.Signlink;
-import com.google.common.base.Preconditions;
-import lombok.extern.java.Log;
 
 public class CacheDownloader {
 
@@ -25,11 +22,11 @@ public class CacheDownloader {
 	public static int cacheVersionRemote;
 	public static int cacheVersionLocal;
 
-	private Client client;
+	private final Client client;
 
-	private static final int BUFFER = 1024;
+	private static final int BUFFER = 2048;
 
-	private Path fileLocation;
+	private final Path fileLocation;
 
 	public CacheDownloader(Client client) {
 		Objects.requireNonNull(Signlink.getCacheDirectory());
@@ -45,21 +42,12 @@ public class CacheDownloader {
 		}
 	}
 
-//	private int getRemoteVersion() {
-//		try {
-//			URL versionUrl = new URL(Configuration.VERSION_URL);
-//			try(Scanner scanner = new Scanner(versionUrl.openStream())) {
-//				return scanner.nextInt();
-//			}
-//		} catch (Exception e) {
-//			return 0;
-//		}
-//	}
-
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public void writeVersion(int version) {
 		File versionFile = new File(Signlink.getCacheDirectory() + File.separator + "version.dat");
-		if(versionFile.exists())
+		if(versionFile.exists()) {
 			versionFile.delete();
+		}
 		try(BufferedWriter br = new BufferedWriter(new FileWriter(versionFile))) {
 			br.write(version + "");
 		} catch(Exception ex) {
@@ -97,35 +85,26 @@ public class CacheDownloader {
 					return null;
 				}
 			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			//ClientWindow.popupMessage("Could not download the cache file.",
-					//"The website might be down or experiencing interruptions.",
-				//	Signlink.getCacheDirectory());
 		} catch (Exception e) {
 			e.printStackTrace();
-		//	ClientWindow.popupMessage("An error occurred while installing the cache.",
-				//	"You may experience crashes or gameplay interruptions.",
-				//	"Try deleting the cache and restarting the client.",
-				//	Signlink.getCacheDirectory());
 		}
 		return null;
 	}
 
 	private void update() throws IOException {
-		downloadFile(Configuration.CACHE_LINK, getArchivedName());
+		downloadFile(getArchivedName());
 		unZip();
 		writeVersion(cacheVersionRemote);
 		deleteZip();
 	}
 
-	private void downloadFile(String adress, String localFileName) throws IOException {
+	private void downloadFile(String localFileName) throws IOException {
 		OutputStream out = null;
 		URLConnection conn;
 		InputStream in = null;
 
 		try {
-			URL url = new URL(adress);
+			URL url = new URL(Configuration.CACHE_LINK);
 			out = new BufferedOutputStream(new FileOutputStream(Signlink.getCacheDirectory() + "/" + localFileName));
 
 			conn = url.openConnection();
@@ -136,18 +115,12 @@ public class CacheDownloader {
 			int numRead;
 			long numWritten = 0;
 			int fileSize = conn.getContentLength();
-			long startTime = System.currentTimeMillis();
 
 			while ((numRead = in.read(data)) != -1) {
 				out.write(data, 0, numRead);
 				numWritten += numRead;
 
 				int percentage = (int) (((double) numWritten / (double) fileSize) * 100D);
-				long elapsedTime = System.currentTimeMillis() - startTime;
-				int downloadSpeed = (int) ((numWritten / 1024) / (1 + (elapsedTime / 1000)));
-
-				float speedInBytes = 1000f * numWritten / elapsedTime;
-				int timeRemaining =  (int) ((fileSize - numWritten) / speedInBytes);
 
 				client.drawLoadingText(percentage,  "Exilius by VG - Downloading Cache " + percentage + "%");
 			}
@@ -167,15 +140,11 @@ public class CacheDownloader {
 
 	private String getArchivedName() {
 		int lastSlashIndex = Configuration.CACHE_LINK.lastIndexOf('/');
-		if (lastSlashIndex >= 0 && lastSlashIndex < Configuration.CACHE_LINK.length() - 1) {
-			String u = Configuration.CACHE_LINK.substring(lastSlashIndex + 1);
-			return u.replace("?dl=1", "");
-		} else {
-			System.err.println("error retrieving archived name.");
-		}
-		return "";
+		String u = Configuration.CACHE_LINK.substring(lastSlashIndex + 1);
+		return u.replace("?dl=1", "");
 	}
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	private void unZip() throws IOException {
 		InputStream in = new BufferedInputStream(new FileInputStream(fileLocation.toString()));
 		ZipInputStream zin = new ZipInputStream(in);
@@ -219,7 +188,7 @@ public class CacheDownloader {
 	private void unzip(ZipInputStream zin, String s) throws IOException {
 		try (FileOutputStream out = new FileOutputStream(s)) {
 			byte[] b = new byte[BUFFER];
-			int len = 0;
+			int len;
 			while ((len = zin.read(b)) != -1)
 				out.write(b, 0, len);
 		}
