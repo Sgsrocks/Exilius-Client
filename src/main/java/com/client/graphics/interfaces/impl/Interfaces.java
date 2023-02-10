@@ -601,11 +601,11 @@ public final class Interfaces extends RSInterface {
 		addText(47002, "Mystery Box", tda, 2, 0xFFA500, true, true);
 		addButton(47003, 527, "Interfaces/MysteryBox/SPRITE", "Close");
 		addButton(47004, 810, "Interfaces/MysteryBox/SPRITE", "Spin!");
-		addText(47005, "@gre@Spin!", tda, 2, 0xFFA500, true, true);
+		addText(47005, "@red@ Spin!", tda, 2, 0xFFA500, true, true);
 		addSprite(47006, 530, "Interfaces/MysteryBox/SPRITE");
 		addSprite(47007, 531, "Interfaces/MysteryBox/SPRITE");
-		addText(47008, "Feeling lucky?", tda, 2, 0xFFA500, true, true);
-		addText(47009, "Sacrifice your box for a chance at something rare!", tda, 1, 0xFFA500, true, true);
+		addText(47008, "@red@ Feeling lucky?", tda, 2, 0xFFA500, true, true);
+		addText(47009, "@red@ Sacrifice your box for a chance at something rare!", tda, 1, 0xFFA500, true, true);
 		addSprite(47010, 528, "Interfaces/MysteryBox/SPRITE");
 		addSprite(47011, 533, "Interfaces/MysteryBox/SPRITE");
 
