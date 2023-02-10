@@ -13799,9 +13799,9 @@ public class Client extends GameEngine implements RSClient {
 			j %= 60;
 			int yPosition = !isResized() ? 329 : canvasHeight - 165;
 			if (j < 10)
-				aTextDrawingArea_1271.method385(0xffff00, "Glacyte will be updating: " + l + ":0" + j, yPosition, 5);
+				aTextDrawingArea_1271.method385(0xffff00, "Exilius will be updating: " + l + ":0" + j, yPosition, 5);
 			else
-				aTextDrawingArea_1271.method385(0xffff00, "Glacyte will be updating: " + l + ":" + j, yPosition, 5);
+				aTextDrawingArea_1271.method385(0xffff00, "Exilius will be updating: " + l + ":" + j, yPosition, 5);
 
 			anInt849++;
 			if (anInt849 > 75) {

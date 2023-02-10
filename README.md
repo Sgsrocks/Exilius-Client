@@ -1,4 +1,4 @@
-# Glacyte Client
+# Exilius Client
 ## Run arguments
 * --local/-l: localhost connection
 * --developer/-d: developer mode
