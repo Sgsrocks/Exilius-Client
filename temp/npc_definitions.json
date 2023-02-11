@@ -27205,7 +27205,7 @@
     "size": 1
   },
   "5521": {
-    "name": "Le-sabrè",
+    "name": "Le-sabrï¿½",
     "combatLevel": 0,
     "size": 1
   },
@@ -36988,17 +36988,17 @@
   },
   "7550": {
     "name": "Great Olm (Right claw)",
-    "combatLevel": 0,
+    "combatLevel": 549,
     "size": 5
   },
   "7551": {
     "name": "Great Olm",
-    "combatLevel": 0,
+    "combatLevel": 1043,
     "size": 5
   },
   "7552": {
     "name": "Great Olm (Left claw)",
-    "combatLevel": 0,
+    "combatLevel": 750,
     "size": 5
   },
   "7553": {

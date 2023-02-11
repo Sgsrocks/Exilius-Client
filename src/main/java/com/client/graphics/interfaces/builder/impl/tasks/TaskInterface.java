@@ -1,6 +1,5 @@
 package com.client.graphics.interfaces.builder.impl.tasks;
 
-import com.client.Configuration;
 import com.client.Sprite;
 import com.client.graphics.interfaces.RSInterface;
 import com.client.graphics.interfaces.builder.InterfaceBuilder;
@@ -9,11 +8,12 @@ import com.client.graphics.interfaces.builder.impl.tasks.model.TaskEntry;
 import com.client.graphics.interfaces.builder.impl.tasks.model.TaskEntryType;
 import com.client.model.GameItem;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.RandomUtils;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.StringJoiner;
-import org.apache.commons.lang3.RandomUtils;
 
 // TODO if hover has variable items we might need to move buttons to predictable ids (like 100, 101, etc)
 // TODO server side: make claiming not automatic but clicking
@@ -37,7 +37,7 @@ public class TaskInterface extends InterfaceBuilder {
     public int containerInterfaceId;
     public TaskEntryType state = TaskEntryType.ACHIEVEMENTS; // Default to achievements for now
 
-    public static boolean TEST_MODE = false && Configuration.developerMode;
+    public static boolean TEST_MODE = false;
 
     public TaskInterface() {
         super(55_500); // 1400 free
@@ -147,7 +147,7 @@ public class TaskInterface extends InterfaceBuilder {
 
     public TaskInterfaceSub byType(TaskEntryType type) {
         Optional<TaskInterfaceSub> state = Arrays.stream(subs).filter(it -> it.getType() == type).findFirst();
-        if (!state.isPresent()) {
+        if (state.isEmpty()) {
             throw new IllegalStateException("No type found: " + type);
         }
         return state.get();

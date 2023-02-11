@@ -49,7 +49,7 @@ public final class NpcDefinition implements RSNPCComposition {
 				return copy(entityDef, 11855, 6633, "Vote boss jr",new int[] {57989, 27937, 57985, 57968, 27990}, 0, "Talk-to", null, "Pick-Up", null, null);
 			case 11960:
 				return copy(entityDef, 11960, 9120, "Donation Shop 2", 0, "Trade", null, "Rewards", null, null );
-		}
+	}
 		if (i == Npcs.BOB_BARTER_HERBS) {
 			entityDef.actions = new String[] { "Talk-to", "Prices", "Decant", "Clean", null };
 		}
@@ -215,9 +215,8 @@ public final class NpcDefinition implements RSNPCComposition {
 			entityDef.combatLevel = 0;
 			entityDef.actions = new String[] { "Small Net", null, "Harpoon", null, null };
 		}
-		if(i==8920){
-
-			entityDef.actions = new String[] { null, "Attack", null, null, null };
+		if(i==8920) {
+			entityDef.actions = new String[]{null, "Attack", null, null, null};
 		}
 		if(i==8921){
 			entityDef.name = "Crystal Whirlwind";

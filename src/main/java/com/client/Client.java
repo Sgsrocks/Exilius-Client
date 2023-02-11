@@ -102,6 +102,7 @@ import net.runelite.api.vars.AccountType;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.rs.api.*;
 import com.client.engine.GameEngine;
+import org.w3c.dom.NodeList;
 
 @Slf4j
 public class Client extends GameEngine implements RSClient {
@@ -6743,7 +6744,6 @@ public class Client extends GameEngine implements RSClient {
 			}
 		}
 	}
-
 	private void build3dScreenMenu() {
 		if (itemSelected == 0 && spellSelected == 0) {
 			menuActionName[menuActionRow] = "Walk here";
@@ -6759,7 +6759,6 @@ public class Client extends GameEngine implements RSClient {
 			int j1 = ObjectKeyUtil.getObjectY(l);
 			int k1 = ObjectKeyUtil.getObjectOpcode(l);
 			int l1 = ObjectKeyUtil.getObjectId(l);
-
 			if (l == j)
 				continue;
 			j = l;
@@ -6843,7 +6842,7 @@ public class Client extends GameEngine implements RSClient {
 
 					for (int l2 = 0; l2 < playerCount; l2++) {
 						Player player = players[highres_player_list[l2]];
-						if (player != null && player.x == npc.x && player.z == npc.z) {
+						if (player != null && player.x == npc.x && player.y == npc.z) {
 							buildAtPlayerMenu(i1, highres_player_list[l2], player, j1);
 						}
 					}
@@ -6938,7 +6937,6 @@ public class Client extends GameEngine implements RSClient {
 			}
 		}
 	}
-
 	@Override
 	public void cleanUpForQuit() {
 //		try {
