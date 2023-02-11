@@ -74,7 +74,7 @@ public final class MapRegion {
 							if ((tileFlags[1][x][y] & BRIDGE_TILE) == 2)
 								plane--;
 							if (plane >= 0)
-								maps[plane].block(x, y);
+								maps[plane].method213(x, y);
 						}
 
 				}
@@ -463,9 +463,7 @@ public final class MapRegion {
 		}
 		int mX = Client.instance.currentRegionX - 6;
 		int mY = Client.instance.currentRegionY - 6;
-		int actualX = mX * 8 + x;
-		int actualY = mY * 8 + y;
-		int actualH = z;
+
 
 		ObjectDefinition definition = ObjectDefinition.lookup(id);
 
@@ -473,12 +471,6 @@ public final class MapRegion {
 		int sizeY = flag ? definition.width : definition.length;
 		int sizeX = flag ? definition.length : definition.width;
 
-		if(actualH == 0) {
-			//EDGEVILLE HOUSE IN FRONT OF BANK WALLS REMOVAL
-			if(actualX >= 3092 && actualX <= 3094 && (actualY == 3514 || actualY == 3513 || actualY == 3506 || actualY == 3505 || actualY == 3507)) {
-				return;
-			}
-		}
 
 		flag = 104 >= sizeY + x;
 		int modX = flag ? x + (sizeY >> 1) : x;
@@ -516,7 +508,7 @@ public final class MapRegion {
 			}
 			scene.addGroundDecoration(z, mean, y, ((Renderable) (obj)), config, key, x);
 			if (definition.blockWalk && definition.isInteractive && class11 != null) {
-				class11.block(x, y);
+				class11.method213(x, y);
 			}
 			return;
 		}
@@ -878,7 +870,7 @@ public final class MapRegion {
 		for (int i2 = 0; i2 < 8; i2++) { //Add clipping
 			for (int j2 = 0; j2 < 8; j2++)
 				if (l + i2 > 0 && l + i2 < 103 && l1 + j2 > 0 && l1 + j2 < 103)
-					clips[k1].clipData[l + i2][l1 + j2] &= 0xfeffffff;
+					clips[k1].anIntArrayArray294[l + i2][l1 + j2] &= 0xfeffffff;
 
 		}
 
@@ -902,7 +894,7 @@ public final class MapRegion {
 			for (int j1 = 0; j1 < 64; j1++) {
 				for (int k1 = 0; k1 < 64; k1++)
 					if (j + j1 > 0 && j + j1 < 103 && i + k1 > 0 && i + k1 < 103)
-						aclass11[i1].clipData[j + j1][i + k1] &= 0xfeffffff;
+						aclass11[i1].anIntArrayArray294[j + j1][i + k1] &= 0xfeffffff;
 			}
 
 		}
@@ -1117,7 +1109,7 @@ public final class MapRegion {
 			}
 			worldController.addGroundDecoration(k1, l2, regionY, ((Renderable) (obj)), byte1, key, regionX);
 			if (definition.blockWalk && definition.isInteractive) {
-				class11.block(regionX, regionY);
+				class11.method213(regionX, regionY);
 			}
 			return;
 		}

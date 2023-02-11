@@ -9977,7 +9977,7 @@ public class Client extends GameEngine implements RSClient {
 		bigY[l3++] = localY;
 		boolean flag1 = false;
 		int j4 = bigX.length;
-		int ai[][] = collisionMaps[plane].clipData;
+		int ai[][] = collisionMaps[plane].anIntArrayArray294;
 		while (i4 != l3) {
 			j3 = bigX[i4];
 			k3 = bigY[i4];
@@ -9996,7 +9996,7 @@ public class Client extends GameEngine implements RSClient {
 					break;
 				}
 			}
-			if (k1 != 0 && k != 0 && collisionMaps[plane].atObject(i2, k2, j3, k, l1, k1, k3)) {
+			if (k1 != 0 && k != 0 && collisionMaps[plane].method221(i2, k2, j3, k, l1, k1, k3)) {
 				flag1 = true;
 				break;
 			}
@@ -15908,7 +15908,7 @@ public class Client extends GameEngine implements RSClient {
 					scene.removeWallObject(x, z, y);
 					ObjectDefinition objectDef = ObjectDefinition.lookup(id);
 					if (objectDef.blockWalk)
-						collisionMaps[z].removeObject(orientation, objectType,
+						collisionMaps[z].method215(orientation, objectType,
 								objectDef.blocksProjectile, x, y);
 				}
 				if (group == 1)
@@ -15921,14 +15921,14 @@ public class Client extends GameEngine implements RSClient {
 							|| y + objectDef.width > 103)
 						return;
 					if (objectDef.blockWalk)
-						collisionMaps[z].removeObject(orientation, objectDef.length, x,
+						collisionMaps[z].method216(orientation, objectDef.length, x,
 								y, objectDef.width, objectDef.blocksProjectile);
 				}
 				if (group == 3) {
 					scene.removeGroundDecoration(z, y, x);
 					ObjectDefinition objectDef = ObjectDefinition.lookup(id);
 					if (objectDef.blockWalk && objectDef.isInteractive)
-						collisionMaps[z].removeFloorDecoration(y, x);
+						collisionMaps[z].method218(y, x);
 				}
 			}
 			if (previousId >= 0) {
