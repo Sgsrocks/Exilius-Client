@@ -2,3 +2,6 @@
 /.gradle/
 /build/
 /build/classes/java/main/
+/data/custom_animations/
+/data/custom_maps/
+/data/custom_models/
