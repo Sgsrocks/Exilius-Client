@@ -65,18 +65,6 @@ public final class NpcDefinition implements RSNPCComposition {
 			// Setting combat to zero to npcs that can't be attacked
 			entityDef.combatLevel = 0;
 		}
-		if(i == 7144) {
-			entityDef.models = new int[]{31241};
-			entityDef.standAnimation = 7230;
-			entityDef.walkAnimation = 7233;
-			entityDef.size = 2;
-		}
-		if(i == 9021) {
-			entityDef.models = new int[]{38594};
-			entityDef.standAnimation = 8417;
-			entityDef.walkAnimation = 8416;
-			entityDef.size = 5;
-		}
 		if (i == Npcs.PERDU) {
 			entityDef.actions = new String[] { "Talk-to", null, "Reclaim-lost", null, null};
 		}

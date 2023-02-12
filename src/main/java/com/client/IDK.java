@@ -3,7 +3,7 @@ package com.client;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) 
 
-public final class IDK {
+public final class IDK  {
 
 	public static void unpackConfig(FileArchive streamLoader) {
 		Buffer stream = new Buffer(streamLoader.readFile("idk.dat"));
@@ -14,6 +14,8 @@ public final class IDK {
 			if (cache[j] == null)
 				cache[j] = new IDK();
 			cache[j].readValues(stream);
+			cache[j].colourToFind[0] = (short) 55232;
+			cache[j].colourToReplace[0] = 6798;
 		}
 	}
 
@@ -31,37 +33,27 @@ public final class IDK {
 					modelIds[k] = stream.readUShort();
 			} else if (i == 3)
 				nonSelectable = true;
-
-			// 317 stuff
-			else if (i >= 40 && i < 50)
-				colourToFind[i - 40] = stream.readUShort();
-			else if (i >= 50 && i < 60)
-				colourToReplace[i - 50] = stream.readUShort();
-			else if (i >= 60 && i < 70)
+			else if (i == 40) {
+				int length = stream.get_unsignedbyte();
+				colourToFind = new short[length];
+				colourToReplace = new short[length];
+				for(int idx = 0;idx<length;idx++) {
+					colourToFind[idx] = (short) stream.readUShort();
+					colourToReplace[idx] = (short) stream.readUShort();
+				}
+			} else if (i == 41) {
+				int length = stream.get_unsignedbyte();
+				textureToFind = new short[length];
+				textureToReplace = new short[length];
+				for(int idx = 0;idx<length;idx++) {
+					textureToFind[idx] = (short) stream.readUShort();
+					textureToReplace[idx] = (short) stream.readUShort();
+				}
+			} else if (i >= 60 && i < 70) {
 				models[i - 60] = stream.readUShort();
-
-			// OSRS STUFF
-//			else if (i == 40) {
-//				int length = stream.readUnsignedByte();
-//				colourToFind = new int[length];
-//				colourToReplace = new int[length];
-//				for(int idx = 0;idx<length;idx++) {
-//					colourToFind[idx] = stream.readUnsignedWord();
-//					colourToReplace[idx] = stream.readUnsignedWord();
-//				}
-//			} else if (i == 41) {
-//				int length = stream.readUnsignedByte();
-//				textureToFind = new int[length];
-//				textureToReplace = new int[length];
-//				for(int idx = 0;idx<length;idx++) {
-//					textureToFind[idx] = stream.readUnsignedWord();
-//					textureToReplace[idx] = stream.readUnsignedWord();
-//				}
-//			} else if (i >= 60 && i < 70) {
-//				models[i - 60] = stream.readUnsignedWord();
-//				if(models[i - 60] == 65535)
-//					models[i - 60] = -1;
-//			}
+				if(models[i - 60] == 65535)
+					models[i - 60] = -1;
+			}
 			else
 				System.out.println("Error unrecognised config code: " + i);
 		} while (true);
@@ -139,16 +131,16 @@ public final class IDK {
 		nonSelectable = false;
 
 		// these aren't set when loading osrs idk
-		colourToFind = new int[6];
-		colourToReplace = new int[6];
+		colourToFind = new short[6];
+		colourToReplace = new short[6];
 	}
 
 	public static int length;
 	public static IDK cache[];
 	public int bodyPartId;
 	private int[] modelIds;
-	private int[] colourToFind;
-	private int[] colourToReplace;
+	private short[] colourToFind;
+	private short[] colourToReplace;
 	private short[] textureToFind;
 	private short[] textureToReplace;
 	private final int[] models = { -1, -1, -1, -1, -1 };
