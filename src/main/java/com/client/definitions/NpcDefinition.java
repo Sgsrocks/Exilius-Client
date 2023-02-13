@@ -49,10 +49,35 @@ public final class NpcDefinition implements RSNPCComposition {
 				return copy(entityDef, 11855, 6633, "Vote boss jr",new int[] {57989, 27937, 57985, 57968, 27990}, 0, "Talk-to", null, "Pick-Up", null, null);
 			case 11960:
 				return copy(entityDef, 11960, 9120, "Donation Shop 2", 0, "Trade", null, "Rewards", null, null );
-	}
+
+		}
 		if (i == Npcs.BOB_BARTER_HERBS) {
 			entityDef.actions = new String[] { "Talk-to", "Prices", "Decant", "Clean", null };
 		}
+		if(i == 7553){
+        entityDef.name = "Great Olm (Right claw)";
+        entityDef.combatLevel = 549;
+        entityDef.size = 5;
+        entityDef.aBoolean93 = true;
+        entityDef.aBoolean84 = true;
+        entityDef.actions = new String[] { null, "Attack", null, null, null };
+        }
+        if(i == 7554){
+            entityDef.name = "Great Olm";
+            entityDef.combatLevel = 1043;
+            entityDef.size = 5;
+            entityDef.aBoolean93 = true;
+            entityDef.aBoolean84 = true;
+            entityDef.actions = new String[] { null, "Attack", null, null, null };
+        }
+        if(i == 7555){
+            entityDef.name = "Great Olm (Left claw)";
+            entityDef.combatLevel = 750;
+            entityDef.size = 5;
+            entityDef.aBoolean93 = true;
+            entityDef.aBoolean84 = true;
+            entityDef.actions = new String[] { null, "Attack", null, null, null };
+        }
 		if (i == Npcs.ZAHUR)
 			entityDef.actions[0] = "Trade";
 		if (i == Npcs.JOSSIK) {
@@ -203,8 +228,9 @@ public final class NpcDefinition implements RSNPCComposition {
 			entityDef.combatLevel = 0;
 			entityDef.actions = new String[] { "Small Net", null, "Harpoon", null, null };
 		}
-		if(i==8920) {
-			entityDef.actions = new String[]{null, "Attack", null, null, null};
+		if(i==8920){
+
+			entityDef.actions = new String[] { null, "Attack", null, null, null };
 		}
 		if(i==8921){
 			entityDef.name = "Crystal Whirlwind";
@@ -1114,7 +1140,7 @@ public final class NpcDefinition implements RSNPCComposition {
 					models[j1] = buffer.readUShort();
 
 			} else if (opcode == 2)
-				name = buffer.readJagexString();
+				name = buffer.readString();
 			else if (opcode == 12)
 				size = buffer.readSignedByte();
 			else if (opcode == 13)
@@ -1240,24 +1266,6 @@ public final class NpcDefinition implements RSNPCComposition {
 				this.field1933 = buffer.get_unsignedshort();
 				this.field1922 = buffer.get_unsignedshort();
 				this.field1923 = buffer.get_unsignedshort();
-			} else if (opcode == 249) {
-				int length = buffer.get_unsignedbyte();
-
-				params = new HashMap<>(length);
-
-				for (int i = 0; i < length; i++) {
-					boolean isString = buffer.get_unsignedbyte() == 1;
-					int key = buffer.read24Int();
-					Object value;
-
-					if (isString) {
-						value = buffer.readString();
-					} else {
-						value = buffer.readInt();
-					}
-
-					params.put(key, value);
-				}
 			}
 		}
 	}
@@ -1391,9 +1399,9 @@ public final class NpcDefinition implements RSNPCComposition {
 
 	private NpcDefinition() {
 		walkAnimation = -1;
-		rotate90LeftAnimation = -1;
-		anInt57 = -1;
-		rotate180Animation = -1;
+		anInt57 = walkAnimation;
+		rotate180Animation = walkAnimation;
+		anInt59 = walkAnimation;
 		anInt59 = -1;
 		combatLevel = -1;
 		anInt64 = 1834;
@@ -1409,6 +1417,8 @@ public final class NpcDefinition implements RSNPCComposition {
 		onMinimap = true;
 		anInt91 = 128;
 		aBoolean93 = false;
+		isClickable = true;
+		aBool2190 = false;
 	}
 
 	@Override
@@ -1482,8 +1492,8 @@ public final class NpcDefinition implements RSNPCComposition {
 		}
 	}
 	public HashMap<Integer, Object> params;
-	public boolean isClickable = true;
-	public boolean aBool2190 = false;
+	public boolean isClickable;
+	public boolean aBool2190;
 	public int field1938 = -1;
 	public int readyanim_r = -1;
 	public int readyanim_l = -1;
@@ -1564,7 +1574,7 @@ public final class NpcDefinition implements RSNPCComposition {
 
 	@Override
 	public String getName() {
-		return null;
+		return name;
 	}
 
 	@Override
@@ -1579,12 +1589,12 @@ public final class NpcDefinition implements RSNPCComposition {
 
 	@Override
 	public boolean isClickable() {
-		return false;
+		return isClickable;
 	}
 
 	@Override
 	public boolean isFollower() {
-		return false;
+		return aBool2190;
 	}
 
 	@Override
@@ -1594,22 +1604,22 @@ public final class NpcDefinition implements RSNPCComposition {
 
 	@Override
 	public boolean isMinimapVisible() {
-		return false;
+		return onMinimap;
 	}
 
 	@Override
 	public boolean isVisible() {
-		return false;
+		return aBoolean93;
 	}
 
 	@Override
 	public int getId() {
-		return 0;
+		return (int) npcId;
 	}
 
 	@Override
 	public int getCombatLevel() {
-		return 0;
+		return combatLevel;
 	}
 
 	@Override

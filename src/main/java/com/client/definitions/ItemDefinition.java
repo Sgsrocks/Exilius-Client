@@ -2840,8 +2840,8 @@ public final class ItemDefinition implements RSItemComposition {
                 originalModelColors = new int[length];
                 modifiedModelColors = new int[length];
                 for (int index = 0; index < length; index++) {
-                    modifiedModelColors[index] = buffer.readUShort();
                     originalModelColors[index] = buffer.readUShort();
+                    modifiedModelColors[index] = buffer.readUShort();
                 }
             } else if (opcode == 41) {
                 int length = buffer.readUnsignedByte();

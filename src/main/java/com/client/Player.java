@@ -47,7 +47,7 @@ public final class Player extends Entity implements RSPlayer {
 				mergeloc_model = null;
 			if (Client.update_tick >= mergelocanim_loop_start && Client.update_tick < mergelocanim_loop_stop) {
 				Model model_1 = mergeloc_model;
-				model_1.offsetBy(loc_offset_x - super.x, loc_offset_y - y, loc_offset_z - super.z);
+				model_1.offsetBy(loc_offset_x - super.x, loc_offset_y - anInt1709, loc_offset_z - super.y);
 				if (super.getTurnDirection() == 512) {
 					model_1.rotate90Degrees();
 					model_1.rotate90Degrees();
@@ -69,8 +69,8 @@ public final class Player extends Entity implements RSPlayer {
 					model_1.rotate90Degrees();
 					model_1.rotate90Degrees();
 				}
-				model_1.offsetBy(super.x - loc_offset_x, y - loc_offset_y,
-						super.z - loc_offset_z);
+				model_1.offsetBy(super.x - loc_offset_x, anInt1709 - loc_offset_y,
+						super.y - loc_offset_z);
 			}
 		}
 		model.singleTile = true;
@@ -424,7 +424,7 @@ public final class Player extends Entity implements RSPlayer {
 	public int hintIcon;
 	public int mergelocanim_loop_start;
 	int mergelocanim_loop_stop;
-	int y;
+	int anInt1709;
 	boolean visible;
 	int loc_offset_x;
 	int loc_offset_y;

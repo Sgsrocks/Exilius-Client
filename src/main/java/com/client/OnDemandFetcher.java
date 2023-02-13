@@ -271,7 +271,7 @@ public final class OnDemandFetcher extends OnDemandFetcherParent implements Runn
 	}
 
 	public int getModelCount() {
-		return 30999;
+		return 1000000;
 	}
 
 	public void provide(int i, int j) {

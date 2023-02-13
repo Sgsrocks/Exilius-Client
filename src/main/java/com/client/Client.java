@@ -102,7 +102,6 @@ import net.runelite.api.vars.AccountType;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.rs.api.*;
 import com.client.engine.GameEngine;
-import org.w3c.dom.NodeList;
 
 @Slf4j
 public class Client extends GameEngine implements RSClient {
@@ -1167,7 +1166,7 @@ public class Client extends GameEngine implements RSClient {
 				e.printStackTrace();
 			}
 		}
-		packCustomMaps();
+		//packCustomMaps();
 		//packCustomModels();
 		//packCustomAnimations();
 	}
@@ -1666,17 +1665,17 @@ public class Client extends GameEngine implements RSClient {
 			if (npc == null || !npc.isVisible() || npc.desc.aBoolean93 != flag)
 				continue;
 			int l = npc.x >> 7;
-			int i1 = npc.z >> 7;
+			int i1 = npc.y >> 7;
 			if (l < 0 || l >= 104 || i1 < 0 || i1 >= 104)
 				continue;
-			if (npc.size == 1 && (npc.x & 0x7f) == 64 && (npc.z & 0x7f) == 64) {
+			if (npc.size == 1 && (npc.x & 0x7f) == 64 && (npc.y & 0x7f) == 64) {
 				if (anIntArrayArray929[l][i1] == anInt1265)
 					continue;
 				anIntArrayArray929[l][i1] = anInt1265;
 			}
 			if (!npc.desc.aBoolean84)
 				k |= ~0x7fffffffffffffffL;
-			scene.addAnimableA(plane, npc.target_direction, getCenterHeight(plane, npc.z, npc.x), k, npc.z,
+			scene.addAnimableA(plane, npc.target_direction, getCenterHeight(plane, npc.y, npc.x), k, npc.y,
 					(npc.size - 1) * 64 + 60, npc.x, npc, npc.is_walking);
 		}
 	}
@@ -3517,7 +3516,7 @@ public class Client extends GameEngine implements RSClient {
 	}
 
 	public void method47(boolean flag) {
-		if (localPlayer.x >> 7 == destX && localPlayer.z >> 7 == destY)
+		if (localPlayer.x >> 7 == destX && localPlayer.y >> 7 == destY)
 			destX = 0;
 		int j = playerCount;
 		if (flag)
@@ -3537,23 +3536,23 @@ public class Client extends GameEngine implements RSClient {
 			player.lowmem = (lowMem && playerCount > 50 || playerCount > 200) && !flag
 					&& player.secondaryanim == player.readyanim;
 			int j1 = player.x >> 7;
-			int k1 = player.z >> 7;
+			int k1 = player.y >> 7;
 			if (j1 < 0 || j1 >= 104 || k1 < 0 || k1 >= 104)
 				continue;
 			if (player.mergeloc_model != null && update_tick >= player.mergelocanim_loop_start && update_tick < player.mergelocanim_loop_stop) {
 				player.lowmem = false;
-				player.y = getCenterHeight(plane, player.z, player.x);
-				scene.addToScenePlayerAsObject(plane, player.z, player, player.target_direction, player.max_z, player.x,
-						player.y, player.min_x, player.max_x, i1, player.min_z);
+				player.anInt1709 = getCenterHeight(plane, player.y, player.x);
+				scene.addToScenePlayerAsObject(plane, player.y, player, player.target_direction, player.max_z, player.x,
+						player.anInt1709, player.min_x, player.max_x, i1, player.min_z);
 				continue;
 			}
-			if ((player.x & 0x7f) == 64 && (player.z & 0x7f) == 64) {
+			if ((player.x & 0x7f) == 64 && (player.y & 0x7f) == 64) {
 				if (anIntArrayArray929[j1][k1] == anInt1265)
 					continue;
 				anIntArrayArray929[j1][k1] = anInt1265;
 			}
-			player.y = getCenterHeight(plane, player.z, player.x);
-			scene.addAnimableA(plane, player.target_direction, player.y, i1, player.z, 60, player.x, player,
+			player.anInt1709 = getCenterHeight(plane, player.y, player.x);
+			scene.addAnimableA(plane, player.target_direction, player.anInt1709, i1, player.y, 60, player.x, player,
 					player.is_walking);
 		}
 	}
@@ -4160,9 +4159,9 @@ public class Client extends GameEngine implements RSClient {
 			else if (update_tick >= class30_sub2_sub4_sub4.anInt1571) {
 				if (class30_sub2_sub4_sub4.anInt1590 > 0) {
 					Npc npc = npcs[class30_sub2_sub4_sub4.anInt1590 - 1];
-					if (npc != null && npc.x >= 0 && npc.x < 13312 && npc.z >= 0 && npc.z < 13312)
-						class30_sub2_sub4_sub4.set_destination(update_tick, npc.z,
-								getCenterHeight(class30_sub2_sub4_sub4.anInt1597, npc.z, npc.x)
+					if (npc != null && npc.x >= 0 && npc.x < 13312 && npc.y >= 0 && npc.y < 13312)
+						class30_sub2_sub4_sub4.set_destination(update_tick, npc.y,
+								getCenterHeight(class30_sub2_sub4_sub4.anInt1597, npc.y, npc.x)
 										- class30_sub2_sub4_sub4.anInt1583,
 								npc.x);
 				}
@@ -4173,9 +4172,9 @@ public class Client extends GameEngine implements RSClient {
 						player = localPlayer;
 					else
 						player = players[j];
-					if (player != null && player.x >= 0 && player.x < 13312 && player.z >= 0 && player.z < 13312)
-						class30_sub2_sub4_sub4.set_destination(update_tick, player.z,
-								getCenterHeight(class30_sub2_sub4_sub4.anInt1597, player.z, player.x)
+					if (player != null && player.x >= 0 && player.x < 13312 && player.y >= 0 && player.y < 13312)
+						class30_sub2_sub4_sub4.set_destination(update_tick, player.y,
+								getCenterHeight(class30_sub2_sub4_sub4.anInt1597, player.y, player.x)
 										- class30_sub2_sub4_sub4.anInt1583,
 								player.x);
 				}
@@ -6719,7 +6718,7 @@ public class Client extends GameEngine implements RSClient {
 	public void method70() {
 		anInt1251 = 0;
 		int j = (localPlayer.x >> 7) + baseX;
-		int k = (localPlayer.z >> 7) + baseY;
+		int k = (localPlayer.y >> 7) + baseY;
 		if (j >= 3053 && j <= 3156 && k >= 3056 && k <= 3136)
 			anInt1251 = 1;
 		if (j >= 3072 && j <= 3118 && k >= 9492 && k <= 9535)
@@ -6744,6 +6743,7 @@ public class Client extends GameEngine implements RSClient {
 			}
 		}
 	}
+
 	private void build3dScreenMenu() {
 		if (itemSelected == 0 && spellSelected == 0) {
 			menuActionName[menuActionRow] = "Walk here";
@@ -6759,6 +6759,7 @@ public class Client extends GameEngine implements RSClient {
 			int j1 = ObjectKeyUtil.getObjectY(l);
 			int k1 = ObjectKeyUtil.getObjectOpcode(l);
 			int l1 = ObjectKeyUtil.getObjectId(l);
+
 			if (l == j)
 				continue;
 			j = l;
@@ -6832,17 +6833,17 @@ public class Client extends GameEngine implements RSClient {
 			}
 			if (k1 == 1) {
 				Npc npc = npcs[l1];
-				if (npc.desc.size == 1 && (npc.x & 0x7f) == 64 && (npc.z & 0x7f) == 64) {
+				if (npc.desc.size == 1 && (npc.x & 0x7f) == 64 && (npc.y & 0x7f) == 64) {
 					for (int j2 = 0; j2 < npcCount; j2++) {
 						Npc npc2 = npcs[highres_npc_list[j2]];
-						if (npc2 != null && npc2 != npc && npc2.desc.size == 1 && npc2.x == npc.x && npc2.z == npc.z && npc2.isShowMenuOnHover()) {
+						if (npc2 != null && npc2 != npc && npc2.desc.size == 1 && npc2.x == npc.x && npc2.y == npc.y && npc2.isShowMenuOnHover()) {
 							buildAtNPCMenu(npc2.desc, highres_npc_list[j2], j1, i1);
 						}
 					}
 
 					for (int l2 = 0; l2 < playerCount; l2++) {
 						Player player = players[highres_player_list[l2]];
-						if (player != null && player.x == npc.x && player.y == npc.z) {
+						if (player != null && player.x == npc.x && player.y == npc.y) {
 							buildAtPlayerMenu(i1, highres_player_list[l2], player, j1);
 						}
 					}
@@ -6854,12 +6855,12 @@ public class Client extends GameEngine implements RSClient {
 			}
 			if (k1 == 0) {
 				Player player = players[l1];
-				if ((player.x & 0x7f) == 64 && (player.z & 0x7f) == 64) {
+				if ((player.x & 0x7f) == 64 && (player.y & 0x7f) == 64) {
 					for (int k2 = 0; k2 < npcCount; k2++) {
 						Npc class30_sub2_sub4_sub1_sub1_2 = npcs[highres_npc_list[k2]];
 						if (class30_sub2_sub4_sub1_sub1_2 != null && class30_sub2_sub4_sub1_sub1_2.desc.size == 1
 								&& class30_sub2_sub4_sub1_sub1_2.x == player.x
-								&& class30_sub2_sub4_sub1_sub1_2.z == player.z && class30_sub2_sub4_sub1_sub1_2.isShowMenuOnHover())
+								&& class30_sub2_sub4_sub1_sub1_2.y == player.y && class30_sub2_sub4_sub1_sub1_2.isShowMenuOnHover())
 							buildAtNPCMenu(class30_sub2_sub4_sub1_sub1_2.desc, highres_npc_list[k2], j1, i1);
 					}
 
@@ -6867,7 +6868,7 @@ public class Client extends GameEngine implements RSClient {
 						Player class30_sub2_sub4_sub1_sub2_2 = players[highres_player_list[i3]];
 						if (class30_sub2_sub4_sub1_sub2_2 != null && class30_sub2_sub4_sub1_sub2_2 != player
 								&& class30_sub2_sub4_sub1_sub2_2.x == player.x
-								&& class30_sub2_sub4_sub1_sub2_2.z == player.z)
+								&& class30_sub2_sub4_sub1_sub2_2.y == player.y)
 							buildAtPlayerMenu(i1, highres_player_list[i3], class30_sub2_sub4_sub1_sub2_2, j1);
 					}
 
@@ -6937,6 +6938,7 @@ public class Client extends GameEngine implements RSClient {
 			}
 		}
 	}
+
 	@Override
 	public void cleanUpForQuit() {
 //		try {
@@ -10258,122 +10260,121 @@ public class Client extends GameEngine implements RSClient {
 			return;
 		if (entityDef.childrenIDs != null)
 			entityDef = entityDef.get_multi_npctype();
-		if (entityDef == null)
-			return;
-		if (!entityDef.aBoolean84)
-			return;
-		String s = entityDef.name;
-		if (entityDef.combatLevel != 0)
-			s = s + combatDiffColor(localPlayer.combatLevel, entityDef.combatLevel) + " (level-" + entityDef.combatLevel
-					+ ")";
-		if (itemSelected == 1) {
-			menuActionName[menuActionRow] = "Use " + selectedItemName + " with @yel@" + s;
-			menuActionID[menuActionRow] = 582;
-			menuActionCmd1[menuActionRow] = i;
-			menuActionCmd2[menuActionRow] = k;
-			menuActionCmd3[menuActionRow] = j;
-			menuActionRow++;
-			return;
-		}
-		if (spellSelected == 1) {
-			if ((spellUsableOn & 2) == 2) {
-				menuActionName[menuActionRow] = spellTooltip + " @yel@" + s;
-				menuActionID[menuActionRow] = 413;
+		if (entityDef != null) {
+		if (entityDef.aBoolean84) {
+			String s = entityDef.name;
+			if (entityDef.combatLevel != 0)
+				s = s + combatDiffColor(localPlayer.combatLevel, entityDef.combatLevel) + " (level-" + entityDef.combatLevel
+						+ ")";
+			if (itemSelected == 1) {
+				menuActionName[menuActionRow] = "Use " + selectedItemName + " with @yel@" + s;
+				menuActionID[menuActionRow] = 582;
 				menuActionCmd1[menuActionRow] = i;
 				menuActionCmd2[menuActionRow] = k;
 				menuActionCmd3[menuActionRow] = j;
 				menuActionRow++;
+				return;
 			}
-		} else {
-			if (entityDef.actions != null) {
-				for (int l = 4; l >= 0; l--)
-					if (entityDef.actions[l] != null && !entityDef.actions[l].equalsIgnoreCase("attack")) {
-						menuActionName[menuActionRow] = entityDef.actions[l] + " @yel@" + s;
-						if (l == 0)
-							menuActionID[menuActionRow] = 20;
-						if (l == 1)
-							menuActionID[menuActionRow] = 412;
-						if (l == 2)
-							menuActionID[menuActionRow] = 225;
-						if (l == 3)
-							menuActionID[menuActionRow] = 965;
-						if (l == 4)
-							menuActionID[menuActionRow] = 478;
-						menuActionCmd1[menuActionRow] = i;
-						menuActionCmd2[menuActionRow] = k;
-						menuActionCmd3[menuActionRow] = j;
-						menuActionRow++;
+			if (spellSelected == 1) {
+				if ((spellUsableOn & 2) == 2) {
+					menuActionName[menuActionRow] = spellTooltip + " @yel@" + s;
+					menuActionID[menuActionRow] = 413;
+					menuActionCmd1[menuActionRow] = i;
+					menuActionCmd2[menuActionRow] = k;
+					menuActionCmd3[menuActionRow] = j;
+					menuActionRow++;
+				}
+			} else {
+				if (entityDef.actions != null) {
+					for (int l = 4; l >= 0; l--)
+						if (entityDef.actions[l] != null && !entityDef.actions[l].equalsIgnoreCase("attack")) {
+							menuActionName[menuActionRow] = entityDef.actions[l] + " @yel@" + s;
+							if (l == 0)
+								menuActionID[menuActionRow] = 20;
+							if (l == 1)
+								menuActionID[menuActionRow] = 412;
+							if (l == 2)
+								menuActionID[menuActionRow] = 225;
+							if (l == 3)
+								menuActionID[menuActionRow] = 965;
+							if (l == 4)
+								menuActionID[menuActionRow] = 478;
+							menuActionCmd1[menuActionRow] = i;
+							menuActionCmd2[menuActionRow] = k;
+							menuActionCmd3[menuActionRow] = j;
+							menuActionRow++;
+						}
+
+				}
+				if (entityDef.actions != null) {
+					for (int i1 = 4; i1 >= 0; i1--) {
+						if (entityDef.actions[i1] != null && entityDef.actions[i1].equalsIgnoreCase("attack")) {
+							char c = '\0';
+							if (Configuration.npcAttackOptionPriority == 3)
+								continue;
+							if (Configuration.npcAttackOptionPriority == 0 && entityDef.combatLevel > localPlayer.combatLevel
+									|| Configuration.npcAttackOptionPriority == 1)
+								c = '\u07D0';
+							menuActionName[menuActionRow] = entityDef.actions[i1] + " @yel@" + s;
+							if (i1 == 0)
+								menuActionID[menuActionRow] = 20 + c;
+							if (i1 == 1)
+								menuActionID[menuActionRow] = 412 + c;
+							if (i1 == 2)
+								menuActionID[menuActionRow] = 225 + c;
+							if (i1 == 3)
+								menuActionID[menuActionRow] = 965 + c;
+							if (i1 == 4)
+								menuActionID[menuActionRow] = 478 + c;
+							menuActionCmd1[menuActionRow] = i;
+							menuActionCmd2[menuActionRow] = k;
+							menuActionCmd3[menuActionRow] = j;
+							menuActionRow++;
+						}
 					}
 
-			}
-			if (entityDef.actions != null) {
-				for (int i1 = 4; i1 >= 0; i1--) {
-					if (entityDef.actions[i1] != null && entityDef.actions[i1].equalsIgnoreCase("attack")) {
-						char c = '\0';
-						if (Configuration.npcAttackOptionPriority == 3)
-							continue;
-						if (Configuration.npcAttackOptionPriority == 0 && entityDef.combatLevel > localPlayer.combatLevel
-								|| Configuration.npcAttackOptionPriority == 1)
-							c = '\u07D0';
-						menuActionName[menuActionRow] = entityDef.actions[i1] + " @yel@" + s;
-						if (i1 == 0)
-							menuActionID[menuActionRow] = 20 + c;
-						if (i1 == 1)
-							menuActionID[menuActionRow] = 412 + c;
-						if (i1 == 2)
-							menuActionID[menuActionRow] = 225 + c;
-						if (i1 == 3)
-							menuActionID[menuActionRow] = 965 + c;
-						if (i1 == 4)
-							menuActionID[menuActionRow] = 478 + c;
-						menuActionCmd1[menuActionRow] = i;
-						menuActionCmd2[menuActionRow] = k;
-						menuActionCmd3[menuActionRow] = j;
-						menuActionRow++;
+				}
+				if (clientData) {
+					Npc npc = npcs[i];
+					menuActionName[menuActionRow] = "Examine @yel@" + s
+							+ " @whi@("
+							+ "id=" + entityDef.npcId
+							+ ", index=" + i
+							+ ", stand=" + entityDef.standAnimation
+							+ ", pos=[" + npc.getAbsoluteX() + ", " + npc.getAbsoluteY() + "]"
+							+ ", size=" + entityDef.size
+							+ ")";
+				} else
+					menuActionName[menuActionRow] = "Examine @yel@" + s;
+				menuActionID[menuActionRow] = 1025;
+				menuActionCmd1[menuActionRow] = i;
+				menuActionCmd2[menuActionRow] = k;
+				menuActionCmd3[menuActionRow] = j;
+				menuActionRow++;
+
+				if (debugModels == true) {
+					if (System.currentTimeMillis() - debugDelay > 1000 && entityDef.models != null) {
+						String modelIds = Arrays.toString(entityDef.models);
+						String regColors = Arrays.toString(entityDef.originalColors);
+						String newColors = Arrays.toString(entityDef.newColors);
+						int standAnim = entityDef.standAnimation;
+						int walkAnim = entityDef.walkAnimation;
+						String name = entityDef.name;
+						System.out.println(name + modelIds);
+						pushMessage(name + ": " + modelIds, 0, "");
+						pushMessage("Reg: " + regColors, 0, "");
+						pushMessage("New: " + newColors, 0, "");
+						pushMessage("stand: " + standAnim, 0, "");
+						pushMessage("walk: " + walkAnim, 0, "");
+						debugDelay = System.currentTimeMillis();
+						// menuActionName[menuActionRow] = "Examine
+						// @gre@O(@whi@"+Arrays.toString(entityDef.models)+")@gre@)";
+						// menuActionName[menuActionRow] = "#2
+						// (@whi@"+Arrays.toString(entityDef.originalColors)+")@gre@)(@whi@"+Arrays.toString(entityDef.newColors)+")@gre@)";
 					}
 				}
-
 			}
-			if (clientData) {
-				Npc npc = npcs[i];
-				menuActionName[menuActionRow] = "Examine @yel@" + s
-						+ " @whi@("
-						+ "id=" + entityDef.npcId
-						+ ", index=" + i
-						+ ", stand=" + entityDef.standAnimation
-						+ ", pos=[" + npc.getAbsoluteX() + ", " + npc.getAbsoluteY() + "]"
-						+ ", size=" + entityDef.size
-						+ ")";
-			} else
-				menuActionName[menuActionRow] = "Examine @yel@" + s;
-			menuActionID[menuActionRow] = 1025;
-			menuActionCmd1[menuActionRow] = i;
-			menuActionCmd2[menuActionRow] = k;
-			menuActionCmd3[menuActionRow] = j;
-			menuActionRow++;
-
-			if (debugModels == true) {
-				if (System.currentTimeMillis() - debugDelay > 1000 && entityDef.models != null) {
-					String modelIds = Arrays.toString(entityDef.models);
-					String regColors = Arrays.toString(entityDef.originalColors);
-					String newColors = Arrays.toString(entityDef.newColors);
-					int standAnim = entityDef.standAnimation;
-					int walkAnim = entityDef.walkAnimation;
-					String name = entityDef.name;
-					System.out.println(name + modelIds);
-					pushMessage(name + ": " + modelIds, 0, "");
-					pushMessage("Reg: " + regColors, 0, "");
-					pushMessage("New: " + newColors, 0, "");
-					pushMessage("stand: " + standAnim, 0, "");
-					pushMessage("walk: " + walkAnim, 0, "");
-					debugDelay = System.currentTimeMillis();
-					// menuActionName[menuActionRow] = "Examine
-					// @gre@O(@whi@"+Arrays.toString(entityDef.models)+")@gre@)";
-					// menuActionName[menuActionRow] = "#2
-					// (@whi@"+Arrays.toString(entityDef.originalColors)+")@gre@)(@whi@"+Arrays.toString(entityDef.newColors)+")@gre@)";
-				}
-			}
-
+		}
 		}
 	}
 
@@ -11087,7 +11088,7 @@ public class Client extends GameEngine implements RSClient {
 				int k1 = j * i1 + i * j1 >> 11;
 				int l1 = j * j1 - i * i1 >> 11;
 				int i2 = localPlayer.x + k1 >> 7;
-				int j2 = localPlayer.z - l1 >> 7;
+				int j2 = localPlayer.y - l1 >> 7;
 				if (localPlayer.isAdminRights() && controlIsDown) {
 					teleport(baseX + i2, baseY + j2);
 				} else {
@@ -11101,7 +11102,7 @@ public class Client extends GameEngine implements RSClient {
 						stream.writeUnsignedByte(minimapZoom);
 						stream.writeUnsignedByte(89);
 						stream.writeWord(localPlayer.x);
-						stream.writeWord(localPlayer.z);
+						stream.writeWord(localPlayer.y);
 						stream.writeUnsignedByte(anInt1264);
 						stream.writeUnsignedByte(63);
 					}
@@ -11287,22 +11288,22 @@ public class Client extends GameEngine implements RSClient {
 	}
 
 	public void update_movement(Entity entity) {
-		if (entity.x < 128 || entity.z < 128 || entity.x >= 13184 || entity.z >= 13184) {
+		if (entity.x < 128 || entity.y < 128 || entity.x >= 13184 || entity.y >= 13184) {
 			entity.primaryanim = -1;
 			entity.spotanim = -1;
 			entity.exactmove_start = 0;
 			entity.exactmove_end = 0;
 			entity.x = entity.waypoint_x[0] * 128 + entity.size * 64;
-			entity.z = entity.waypoint_z[0] * 128 + entity.size * 64;
+			entity.y = entity.waypoint_z[0] * 128 + entity.size * 64;
 			entity.clear_waypoint();
 		}
-		if (entity == localPlayer && (entity.x < 1536 || entity.z < 1536 || entity.x >= 11776 || entity.z >= 11776)) {
+		if (entity == localPlayer && (entity.x < 1536 || entity.y < 1536 || entity.x >= 11776 || entity.y >= 11776)) {
 			entity.primaryanim = -1;
 			entity.spotanim = -1;
 			entity.exactmove_start = 0;
 			entity.exactmove_end = 0;
 			entity.x = entity.waypoint_x[0] * 128 + entity.size * 64;
-			entity.z = entity.waypoint_z[0] * 128 + entity.size * 64;
+			entity.y = entity.waypoint_z[0] * 128 + entity.size * 64;
 			entity.clear_waypoint();
 		}
 		if (entity.exactmove_start > update_tick)
@@ -11320,7 +11321,7 @@ public class Client extends GameEngine implements RSClient {
 		int j = entity.exactmove_x1 * 128 + entity.size * 64;
 		int k = entity.exactmove_z1 * 128 + entity.size * 64;
 		entity.x += (j - entity.x) / i;
-		entity.z += (k - entity.z) / i;
+		entity.y += (k - entity.y) / i;
 		entity.walkanim_pause = 0;
 		if (entity.forceMovementDirection == 0)
 			entity.setTurnDirection(1024);
@@ -11351,7 +11352,7 @@ public class Client extends GameEngine implements RSClient {
 			int i1 = entity.exactmove_x2 * 128 + entity.size * 64;
 			int j1 = entity.exactmove_z2 * 128 + entity.size * 64;
 			entity.x = (k * (i - j) + i1 * j) / i;
-			entity.z = (l * (i - j) + j1 * j) / i;
+			entity.y = (l * (i - j) + j1 * j) / i;
 		}
 		entity.walkanim_pause = 0;
 		if (entity.forceMovementDirection == 0)
@@ -11383,12 +11384,12 @@ public class Client extends GameEngine implements RSClient {
 			}
 		}
 		int i = entity.x;
-		int j = entity.z;
+		int j = entity.y;
 		int k = entity.waypoint_x[entity.waypoint_count - 1] * 128 + entity.size * 64;
 		int l = entity.waypoint_z[entity.waypoint_count - 1] * 128 + entity.size * 64;
 		if (k - i > 256 || k - i < -256 || l - j > 256 || l - j < -256) {
 			entity.x = k;
-			entity.z = l;
+			entity.y = l;
 			// Added
 			entity.waypoint_count--;
 			if (entity.anim_delay > 0)
@@ -11503,15 +11504,15 @@ public class Client extends GameEngine implements RSClient {
 				entity.x = k;
 		}
 		if (j < l) {
-			entity.z += translate_delta;
-			if (entity.z > l)
-				entity.z = l;
+			entity.y += translate_delta;
+			if (entity.y > l)
+				entity.y = l;
 		} else if (j > l) {
-			entity.z -= translate_delta;
-			if (entity.z < l)
-				entity.z = l;
+			entity.y -= translate_delta;
+			if (entity.y < l)
+				entity.y = l;
 		}
-		if (entity.x == k && entity.z == l) {
+		if (entity.x == k && entity.y == l) {
 			entity.waypoint_count--;
 			if (entity.anim_delay > 0)
 				entity.anim_delay--;
@@ -11525,7 +11526,7 @@ public class Client extends GameEngine implements RSClient {
 			Npc npc = npcs[entity.interactingEntity];
 			if (npc != null) {
 				int i1 = entity.x - npc.x;
-				int k1 = entity.z - npc.z;
+				int k1 = entity.y - npc.y;
 				if (i1 != 0 || k1 != 0)
 					entity.setTurnDirection((int) (Math.atan2(i1, k1) * 325.94900000000001D) & 0x7ff);
 			}
@@ -11537,14 +11538,14 @@ public class Client extends GameEngine implements RSClient {
 			Player player = players[j];
 			if (player != null) {
 				int l1 = entity.x - player.x;
-				int i2 = entity.z - player.z;
+				int i2 = entity.y - player.y;
 				if (l1 != 0 || i2 != 0)
 					entity.setTurnDirection((int) (Math.atan2(l1, i2) * 325.94900000000001D) & 0x7ff);
 			}
 		}
 		if ((entity.face_x != 0 || entity.face_z != 0) && (entity.waypoint_count == 0 || entity.walkanim_pause > 0)) {
 			int k = entity.x - (entity.face_x - baseX - baseX) * 64;
-			int j1 = entity.z - (entity.face_z - baseY - baseY) * 64;
+			int j1 = entity.y - (entity.face_z - baseY - baseY) * 64;
 			if (k != 0 || j1 != 0) {
 				entity.setTurnDirection((int) (Math.atan2(k, j1) * 325.94900000000001D) & 0x7ff);
 			}
@@ -13334,7 +13335,7 @@ public class Client extends GameEngine implements RSClient {
 	public void method108() {
 		try {
 			int j = localPlayer.x + cameraOffsetX;
-			int k = localPlayer.z + cameraOffsetY;
+			int k = localPlayer.y + cameraOffsetY;
 			if (anInt1014 - j < -500 || anInt1014 - j > 500 || anInt1015 - k < -500 || anInt1015 - k > 500) {
 				anInt1014 = j;
 				anInt1015 = k;
@@ -13412,7 +13413,7 @@ public class Client extends GameEngine implements RSClient {
 				field556 += (j2 - field556) / 80;
 			}
 		} catch (Exception _ex) {
-			Signlink.reporterror("glfc_ex " + localPlayer.x + "," + localPlayer.z + "," + anInt1014 + "," + anInt1015 + ","
+			Signlink.reporterror("glfc_ex " + localPlayer.x + "," + localPlayer.y + "," + anInt1014 + "," + anInt1015 + ","
 					+ currentRegionX + "," + currentRegionY + "," + baseX + "," + baseY);
 			throw new RuntimeException("eek");
 		}
@@ -13584,7 +13585,7 @@ public class Client extends GameEngine implements RSClient {
 						int itemX = baseX + x;
 						int itemY = baseY + y;
 						int playerX = baseX + (localPlayer.x - 6 >> 7);
-						int playerY = baseY + (localPlayer.z - 6 >> 7);
+						int playerY = baseY + (localPlayer.y - 6 >> 7);
 
 						/**
 						 * Fading
@@ -13724,7 +13725,7 @@ public class Client extends GameEngine implements RSClient {
 		}
 
 		int x = baseX + (localPlayer.x - 6 >> 7);
-		int y = baseY + (localPlayer.z - 6 >> 7);
+		int y = baseY + (localPlayer.y - 6 >> 7);
 		int var131 = x >> 6;
 		int var12 = y >> 6;
 		int chunkX = x >> 3;
@@ -14072,7 +14073,7 @@ public class Client extends GameEngine implements RSClient {
 			int k = getXCameraPosShift();
 			int l = getYCameraPosShift();
 			int i1 = localPlayer.x >> 7;
-			int j1 = localPlayer.z >> 7;
+			int j1 = localPlayer.y >> 7;
 			if ((tileFlags[plane][k][l] & 4) != 0)
 				j = plane;
 			int k1;
@@ -14131,7 +14132,7 @@ public class Client extends GameEngine implements RSClient {
 				}
 			}
 		}
-		if ((tileFlags[plane][localPlayer.x >> 7][localPlayer.z >> 7] & 4) != 0)
+		if ((tileFlags[plane][localPlayer.x >> 7][localPlayer.y >> 7] & 4) != 0)
 			j = plane;
 		return j;
 	}
@@ -14294,7 +14295,7 @@ public class Client extends GameEngine implements RSClient {
 				if (instruction == 18)
 					value = (localPlayer.x >> 7) + baseX;
 				if (instruction == 19)
-					value = (localPlayer.z >> 7) + baseY;
+					value = (localPlayer.y >> 7) + baseY;
 				if (instruction == 20)
 					value = script[counter++];
 				if (next == 0) {
@@ -14563,7 +14564,7 @@ public class Client extends GameEngine implements RSClient {
 
 			int i = viewRotation + minimapRotation & 0x7ff;
 			int j = 48 + localPlayer.x / 32;
-			int l2 = 464 - localPlayer.z / 32;
+			int l2 = 464 - localPlayer.y / 32;
 
 			int positionX = (!isResized() ? 9 : 7);
 			int positionY = (!isResized() ? 51 + xOffset : canvasWidth - 160);
@@ -14571,12 +14572,12 @@ public class Client extends GameEngine implements RSClient {
 			minimapImage.rotate(151, i, anIntArray1229, 256 + minimapZoom, anIntArray1052, l2, positionX , positionY, 151, j);
 
 			for (int[] icon : getCustomMapIcons()) {
-				markMinimap(mapFunctions[icon[0]], ((icon[1] - baseX) * 4 + 2) - Client.localPlayer.x / 32, ((icon[2] - baseY) * 4 + 2) - Client.localPlayer.z / 32);
+				markMinimap(mapFunctions[icon[0]], ((icon[1] - baseX) * 4 + 2) - Client.localPlayer.x / 32, ((icon[2] - baseY) * 4 + 2) - Client.localPlayer.y / 32);
 			}
 
 			for (int j5 = 0; j5 < mapIconAmount; j5++) {
 				int k = (anIntArray1072[j5] * 4 + 2) - localPlayer.x / 32;
-				int i3 = (anIntArray1073[j5] * 4 + 2) - localPlayer.z / 32;
+				int i3 = (anIntArray1073[j5] * 4 + 2) - localPlayer.y / 32;
 				markMinimap(mapIconSprite[j5], k, i3);
 			}
 
@@ -14585,11 +14586,11 @@ public class Client extends GameEngine implements RSClient {
 				switch (plane) {
 					case 0:
 						markMinimap(eventIcon, ((3088 - baseX) * 4 + 2) - localPlayer.x / 32,
-								((3494 - baseY) * 4 + 2) - localPlayer.z / 32);
+								((3494 - baseY) * 4 + 2) - localPlayer.y / 32);
 						markMinimap(eventIcon, ((2607 - baseX) * 4 + 2) - localPlayer.x / 32,
-								((4773 - baseY) * 4 + 2) - localPlayer.z / 32);
+								((4773 - baseY) * 4 + 2) - localPlayer.y / 32);
 						markMinimap(eventIcon, ((3103 - baseX) * 4 + 2) - localPlayer.x / 32,
-								((3482 - baseY) * 4 + 2) - localPlayer.z / 32);
+								((3482 - baseY) * 4 + 2) - localPlayer.y / 32);
 						break;
 				}
 			}
@@ -14597,16 +14598,16 @@ public class Client extends GameEngine implements RSClient {
 				switch (plane) {
 					case 0:
 						markMinimap(minimapIcons[0], ((3086 - baseX) * 4 + 2) - localPlayer.x / 32,
-								((3498 - baseY) * 4 + 2) - localPlayer.z / 32);
+								((3498 - baseY) * 4 + 2) - localPlayer.y / 32);
 						markMinimap(minimapIcons[0], ((2832 - baseX) * 4 + 2) - localPlayer.x / 32,
-								((3798 - baseY) * 4 + 2) - localPlayer.z / 32);
+								((3798 - baseY) * 4 + 2) - localPlayer.y / 32);
 						markMinimap(minimapIcons[0], ((2982 - baseX) * 4 + 2) - localPlayer.x / 32,
-								((3643 - baseY) * 4 + 2) - localPlayer.z / 32);
+								((3643 - baseY) * 4 + 2) - localPlayer.y / 32);
 						break;
 
 					case 2:
 						markMinimap(minimapIcons[0], ((2827 - baseX) * 4 + 2) - localPlayer.x / 32,
-								((3810 - baseY) * 4 + 2) - localPlayer.z / 32);
+								((3810 - baseY) * 4 + 2) - localPlayer.y / 32);
 						break;
 				}
 			}
@@ -14616,7 +14617,7 @@ public class Client extends GameEngine implements RSClient {
 					Deque class19 = groundItems[plane][k5][l5];
 					if (class19 != null) {
 						int l = (k5 * 4 + 2) - localPlayer.x / 32;
-						int j3 = (l5 * 4 + 2) - localPlayer.z / 32;
+						int j3 = (l5 * 4 + 2) - localPlayer.y / 32;
 						markMinimap(mapDotItem, l, j3);
 					}
 				}
@@ -14630,7 +14631,7 @@ public class Client extends GameEngine implements RSClient {
 						entityDef = entityDef.get_multi_npctype();
 					if (entityDef != null && entityDef.onMinimap && entityDef.aBoolean84) {
 						int i1 = npc.x / 32 - localPlayer.x / 32;
-						int k3 = npc.z / 32 - localPlayer.z / 32;
+						int k3 = npc.y / 32 - localPlayer.y / 32;
 						markMinimap(mapDotNPC, i1, k3);
 					}
 				}
@@ -14640,7 +14641,7 @@ public class Client extends GameEngine implements RSClient {
 				Player player = players[highres_player_list[j6]];
 				if (player != null && player.isVisible()) {
 					int j1 = player.x / 32 - localPlayer.x / 32;
-					int l3 = player.z / 32 - localPlayer.z / 32;
+					int l3 = player.y / 32 - localPlayer.y / 32;
 					boolean flag1 = false;
 					boolean flag3 = false;
 					String clanname;
@@ -14679,20 +14680,20 @@ public class Client extends GameEngine implements RSClient {
 					Npc npc = npcs[anInt1222];
 					if (npc != null) {
 						int k1 = npc.x / 32 - localPlayer.x / 32;
-						int i4 = npc.z / 32 - localPlayer.z / 32;
+						int i4 = npc.y / 32 - localPlayer.y / 32;
 						refreshMinimap(mapMarker, i4, k1);
 					}
 				}
 				if (hintType == 2) {
 					int l1 = ((hintIconXpos - baseX) * 4 + 2) - localPlayer.x / 32;
-					int j4 = ((hintIconYpos - baseY) * 4 + 2) - localPlayer.z / 32;
+					int j4 = ((hintIconYpos - baseY) * 4 + 2) - localPlayer.y / 32;
 					refreshMinimap(mapMarker, j4, l1);
 				}
 				if (hintType == 10 && anInt933 >= 0 && anInt933 < players.length) {
 					Player player = players[anInt933];
 					if (player != null) {
 						int i2 = player.x / 32 - localPlayer.x / 32;
-						int k4 = player.z / 32 - localPlayer.z / 32;
+						int k4 = player.y / 32 - localPlayer.y / 32;
 						refreshMinimap(mapMarker, k4, i2);
 					}
 				}
@@ -14700,7 +14701,7 @@ public class Client extends GameEngine implements RSClient {
 
 			if (destX != 0) {
 				int j2 = (destX * 4 + 2) - localPlayer.x / 32;
-				int l4 = (destY * 4 + 2) - localPlayer.z / 32;
+				int l4 = (destY * 4 + 2) - localPlayer.y / 32;
 				markMinimap(mapFlag, j2, l4); //764 1068
 			}
 			Rasterizer2D.drawBox((!isResized() ? xOffset + 127 : canvasWidth - 88), (!isResized() ? 83 : 80), 3, 3,
@@ -15072,7 +15073,7 @@ public class Client extends GameEngine implements RSClient {
 	private boolean drawExperienceCounter = true;
 
 	public void npcScreenPos(Entity entity, int i) {
-		calcEntityScreenPos(entity.x, i, entity.z);
+		calcEntityScreenPos(entity.x, i, entity.y);
 	}
 
 	public void calcEntityScreenPos(int i, int j, int l) {
@@ -16662,7 +16663,7 @@ public class Client extends GameEngine implements RSClient {
 								npc.waypoint_z[poiint] -= dy;
 							}
 							npc.x -= dx * 128;
-							npc.z -= dy * 128;
+							npc.y -= dy * 128;
 						}
 					}
 					for (int index = 0; index < maxPlayers; index++) {
@@ -16673,7 +16674,7 @@ public class Client extends GameEngine implements RSClient {
 								player.waypoint_z[i31] -= dy;
 							}
 							player.x -= dx * 128;
-							player.z -= dy * 128;
+							player.y -= dy * 128;
 						}
 					}
 					loadingMap = true;
@@ -17785,7 +17786,7 @@ public class Client extends GameEngine implements RSClient {
 
 			int k = viewRotation + viewRotationOffset & 0x7ff;
 			setCameraPos(600 + i * 3,
-					i, anInt1014, getCenterHeight(plane, localPlayer.z, localPlayer.x) - 50, k, anInt1015);
+					i, anInt1014, getCenterHeight(plane, localPlayer.y, localPlayer.x) - 50, k, anInt1015);
 		}
 
 		int j;
@@ -18035,7 +18036,7 @@ public class Client extends GameEngine implements RSClient {
 	}
 
 	public int getLocalPlayerY() {
-		return baseY + (localPlayer.z - 6 >> 7);
+		return baseY + (localPlayer.y - 6 >> 7);
 	}
 
 	public int xpCounter;

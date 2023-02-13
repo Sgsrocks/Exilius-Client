@@ -58,13 +58,7 @@ public class Model extends Renderable implements RSModel {
 
 
     private Model(int modelId) {
-        if (modelId == 0) {
-            return;
-        }
 
-        if (modelId == 39284) { // broken models
-            return;
-        }
         this.vertex_count = 0;
         this.face_count = 0;
         this.facePriority = 0;
@@ -73,6 +67,14 @@ public class Model extends Renderable implements RSModel {
         byte[] data = modelHeaders[modelId].data;
         if (data[data.length - 1] == -3 && data[data.length - 2] == -1) {
             ModelLoader.decodeType3(this, data);
+        } else if (data[data.length - 1] == -2 && data[data.length - 2] == -1) {
+            ModelLoader.decodeType2(this, data);
+        } else if (IntStream.of(models662).anyMatch(x -> x == modelId)) {
+            if (data[data.length - 1] == -1 && data[data.length - 2] == -1) {
+                decode662(data, modelId);
+            } else {
+                ModelLoader.decodeOldFormat(this, data);
+            }
         } else if (data[data.length - 1] == -2 && data[data.length - 2] == -1) {
             ModelLoader.decodeType2(this, data);
         } else if (data[data.length - 1] == -1 && data[data.length - 2] == -1) {
@@ -2264,7 +2266,7 @@ public class Model extends Renderable implements RSModel {
     final void withinObject(boolean var25, boolean highlighted, long uid) {
         final boolean gpu = Client.instance.isGpu() && Rasterizer3D.world;
 
-        if (diagonal3D < 1600) {
+        if (diagonal3D < 1500) {
             for (int diagonalIndex = 0; diagonalIndex < diagonal3D; diagonalIndex++) {
                 depth[diagonalIndex] = 0;
             }
@@ -2274,7 +2276,7 @@ public class Model extends Renderable implements RSModel {
             int var15;
             int var16;
             int var18;
-            for (int currentTriangle = 0; currentTriangle < this.face_count; currentTriangle = (char)(currentTriangle + 1)) {
+            for (int currentTriangle = 0; currentTriangle < this.face_count; ++currentTriangle) {
                 if (this.colorsZ[currentTriangle] != -2) {
                     int triX = this.trianglesX[currentTriangle];
                     int triY = this.trianglesY[currentTriangle];
@@ -2336,9 +2338,7 @@ public class Model extends Renderable implements RSModel {
                         if (var15 * var23 + var18 * var24 + var21 * var25a > 0) {
                             outOfReach[currentTriangle] = true;
                             int var26 = (vertexScreenZ[triX] + vertexScreenZ[triY] + vertexScreenZ[triZ]) / 3 + this.diagonal3DAboveOrigin;
-                            if (var26 < 0)
-                                var26 = 0;
-                            faceLists[var26][depth[var26]++] = (char)currentTriangle;
+                            faceLists[var26][depth[var26]++] = currentTriangle;
                         }
                     }
                 }

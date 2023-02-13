@@ -15,7 +15,7 @@ public class Configuration {
 	 * Cache version is written to the cache folder inside a version file.
 	 * This is read on startup to tell if the cache is out of date or not.
 	 */
-	public static final int CACHE_VERSION = 5; // Set this to the same value, v0.030 = 30, v1.120 = 1120
+	public static final int CACHE_VERSION = 6; // Set this to the same value, v0.030 = 30, v1.120 = 1120
 
 	public static final String CACHE_LINK = "http://us.files-exilius.com/v0.049.zip";  //https://www.dropbox.com/s/qn9uwtdlob710r4/SurgiosV1
 
@@ -43,7 +43,7 @@ public class Configuration {
 	public static String CUSTOM_MODEL_DIRECTORY = "./data/custom_models/";
 	public static String CUSTOM_ANIMATION_DIRECTORY = "./data/custom_animations/";
 	public static boolean developerMode = false;
-	public static boolean packIndexData = true;  // turn to true to pack maps and items etc......
+	public static boolean packIndexData = false;  // turn to true to pack maps and items etc......
 	public static boolean dumpMaps = false;
 	public static boolean dumpAnimationData = false;
 	public static boolean dumpDataLists = false;

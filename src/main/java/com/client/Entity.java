@@ -23,7 +23,7 @@ public class Entity extends Renderable {
 	}
 
 	public int getAbsoluteY() {
-		int y = Client.baseY + (this.z - 6 >> 7);
+		int y = Client.baseY + (this.y - 6 >> 7);
 		if (this instanceof Npc) {
 			return y - ((Npc) this).desc.size / 2;
 		}
@@ -78,7 +78,7 @@ public class Entity extends Renderable {
 		waypoint_x[0] = x;
 		waypoint_z[0] = z;
 		this.x = waypoint_x[0] * 128 + size * 64;
-		this.z = waypoint_z[0] * 128 + size * 64;
+		this.y = waypoint_z[0] * 128 + size * 64;
 	}
 
 	public final void clear_waypoint() {
@@ -229,7 +229,7 @@ public class Entity extends Renderable {
 	int exactmove_end;
 	int forceMovementDirection;
 	public int x;
-	public int z;
+	public int y;
 	int target_direction;
 	final MoveSpeed[] waypoint_movespeed;
 	int walkanim;
